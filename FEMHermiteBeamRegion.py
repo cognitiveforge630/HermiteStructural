@@ -157,29 +157,14 @@ class FEMHermiteBeamRegion:
         return self.H_scale * np.array([dh1, dh2, dh3, dh4])
 
     def get_hermite_shapes_and_derivs(self, xi, eta, zeta):
-        H_xi = self.hermite_H_functions(xi)
-        H_eta = self.hermite_H_functions(eta)
-        H_zeta = self.hermite_H_functions(zeta)
-        dH_xi = self.dhermite_H_functions(xi)
-        dH_eta = self.dhermite_H_functions(eta)
-        dH_zeta = self.dhermite_H_functions(zeta)
-        N_u = np.zeros(8)
-        dNu_dxi = np.zeros(8)
-        dNu_deta = np.zeros(8)
-        dNu_dzeta = np.zeros(8)
-        for i in range(2):
-            for j in range(2):
-                for k in range(2):
-                    val_i = i * 2
-                    val_j = j * 2
-                    val_k = k * 2
-                    idx = i * 4 + j * 2 + k
-                    N_u[idx] = H_xi[val_i] * H_eta[val_j] * H_zeta[val_k]
-                    dNu_dxi[idx] = dH_xi[val_i] * H_eta[val_j] * H_zeta[val_k]
-                    dNu_deta[idx] = H_xi[val_i] * dH_eta[val_j] * H_zeta[val_k]
-                    dNu_dzeta[idx] = H_xi[val_i] * H_eta[val_j] * dH_zeta[val_k]
-        N_phi = self.hex8_shape_functions(xi, eta, zeta)
+        # Use element-node Hex8 translation shapes; the old cubic-only subset
+        # over-stiffens cantilever bending by breaking the standard nodal basis.
+        N_u = self.hex8_shape_functions(xi, eta, zeta)
+        N_phi = N_u
         dN_dn = self.hex8_shape_derivatives(xi, eta, zeta)
+        dNu_dxi = dN_dn[0, :]
+        dNu_deta = dN_dn[1, :]
+        dNu_dzeta = dN_dn[2, :]
         dNp_dxi = dN_dn[0, :]
         dNp_deta = dN_dn[1, :]
         dNp_dzeta = dN_dn[2, :]
@@ -218,41 +203,29 @@ class FEMHermiteBeamRegion:
                             col_trans = 6 * n
                             col_rot = 6 * n + 3
                             B_gamma[0, col_trans + 0] = dNu_dx[n]
-                            B_gamma[3, col_trans + 0] = dNu_dy[n]
-                            B_gamma[6, col_trans + 0] = dNu_dz[n]
-                            B_gamma[1, col_trans + 1] = dNu_dy[n]
-                            B_gamma[4, col_trans + 1] = dNu_dz[n]
-                            B_gamma[7, col_trans + 1] = dNu_dx[n]
-                            B_gamma[2, col_trans + 2] = dNu_dz[n]
-                            B_gamma[5, col_trans + 2] = dNu_dx[n]
-                            B_gamma[8, col_trans + 2] = dNu_dy[n]
-                            B_gamma[0, col_rot + 1] = N_phi[n]
-                            B_gamma[0, col_rot + 2] = -N_phi[n]
-                            B_gamma[1, col_rot + 0] = -N_phi[n]
+                            B_gamma[1, col_trans + 0] = dNu_dy[n]
+                            B_gamma[2, col_trans + 0] = dNu_dz[n]
+                            B_gamma[3, col_trans + 1] = dNu_dx[n]
+                            B_gamma[4, col_trans + 1] = dNu_dy[n]
+                            B_gamma[5, col_trans + 1] = dNu_dz[n]
+                            B_gamma[6, col_trans + 2] = dNu_dx[n]
+                            B_gamma[7, col_trans + 2] = dNu_dy[n]
+                            B_gamma[8, col_trans + 2] = dNu_dz[n]
                             B_gamma[1, col_rot + 2] = N_phi[n]
-                            B_gamma[2, col_rot + 0] = N_phi[n]
                             B_gamma[2, col_rot + 1] = -N_phi[n]
-                            B_gamma[3, col_rot + 0] = -0.5 * N_phi[n]
-                            B_gamma[3, col_rot + 1] = 0.5 * N_phi[n]
-                            B_gamma[4, col_rot + 1] = -0.5 * N_phi[n]
-                            B_gamma[4, col_rot + 2] = 0.5 * N_phi[n]
-                            B_gamma[5, col_rot + 0] = -0.5 * N_phi[n]
-                            B_gamma[5, col_rot + 2] = 0.5 * N_phi[n]
-                            B_gamma[6, col_rot + 0] = -0.5 * N_phi[n]
-                            B_gamma[6, col_rot + 2] = 0.5 * N_phi[n]
-                            B_gamma[7, col_rot + 0] = 0.5 * N_phi[n]
-                            B_gamma[7, col_rot + 1] = -0.5 * N_phi[n]
-                            B_gamma[8, col_rot + 1] = 0.5 * N_phi[n]
-                            B_gamma[8, col_rot + 2] = -0.5 * N_phi[n]
+                            B_gamma[3, col_rot + 2] = -N_phi[n]
+                            B_gamma[5, col_rot + 0] = N_phi[n]
+                            B_gamma[6, col_rot + 1] = N_phi[n]
+                            B_gamma[7, col_rot + 0] = -N_phi[n]
                             B_curv[0, col_rot + 0] = dNp_dx[n]
-                            B_curv[3, col_rot + 0] = dNp_dy[n]
-                            B_curv[6, col_rot + 0] = dNp_dz[n]
-                            B_curv[1, col_rot + 1] = dNp_dy[n]
-                            B_curv[4, col_rot + 1] = dNp_dz[n]
-                            B_curv[7, col_rot + 1] = dNp_dx[n]
-                            B_curv[2, col_rot + 2] = dNp_dz[n]
-                            B_curv[5, col_rot + 2] = dNp_dx[n]
-                            B_curv[8, col_rot + 2] = dNp_dy[n]
+                            B_curv[1, col_rot + 0] = dNp_dy[n]
+                            B_curv[2, col_rot + 0] = dNp_dz[n]
+                            B_curv[3, col_rot + 1] = dNp_dx[n]
+                            B_curv[4, col_rot + 1] = dNp_dy[n]
+                            B_curv[5, col_rot + 1] = dNp_dz[n]
+                            B_curv[6, col_rot + 2] = dNp_dx[n]
+                            B_curv[7, col_rot + 2] = dNp_dy[n]
+                            B_curv[8, col_rot + 2] = dNp_dz[n]
                         w_det = w * detJ
                         Ke += B_gamma.T @ self.D_stretch @ B_gamma * w_det
                         Ke += B_curv.T @ self.D_curv @ B_curv * w_det

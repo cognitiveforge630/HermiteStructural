@@ -8,6 +8,9 @@ OUTPUT_PATH = "U.npy"
 LOAD_DOF = 1  # uy: transverse bending load direction
 
 
+FACE_NODES_MAX_Z = (4, 5, 6, 7)
+
+
 def build_beam():
     return FEMHermiteBeamRegion(
         Lx=4.0,
@@ -34,6 +37,41 @@ def build_end_point_load_vector(beam, total_load=P, load_dof=LOAD_DOF):
     return force, end_nodes, nodal_load
 
 
+def build_end_face_traction_load_vector(beam, total_load=P, load_dof=LOAD_DOF):
+    force = np.zeros(beam.get_all_points().shape[0] * beam.ndof_per_node)
+    face_area = beam.Lx * beam.Ly
+    traction = total_load / face_area
+
+    for elem_idx in beam.get_elements_at_max_z():
+        coords = beam.get_element_nodes(elem_idx)
+        dofs = beam.get_element_global_dofs(elem_idx).ravel()
+        Fe = np.zeros(beam.ndof_per_node * 8)
+
+        for i in range(3):
+            for j in range(3):
+                xi = beam.gauss_points[i]
+                eta = beam.gauss_points[j]
+                zeta = 1.0
+                weight = beam.gauss_weights[i] * beam.gauss_weights[j]
+                N_u, _, _, _, _, _, _, _ = beam.get_hermite_shapes_and_derivs(
+                    xi, eta, zeta
+                )
+                dN_dn = beam.hex8_shape_derivatives(xi, eta, zeta)
+                J = dN_dn @ coords
+                dx_dxi = J[0, :]
+                dx_deta = J[1, :]
+                detJs = np.linalg.norm(np.cross(dx_dxi, dx_deta))
+
+                for local_node in FACE_NODES_MAX_Z:
+                    Fe[beam.ndof_per_node * local_node + load_dof] += (
+                        N_u[local_node] * traction * weight * detJs
+                    )
+
+        force[dofs] += Fe
+
+    return force, beam.get_nodes_at_max_z(), traction
+
+
 def solve_with_force_vector(beam, force):
     stiffness = beam.build_global_K()
     fixed_dof = []
@@ -52,16 +90,21 @@ def solve_with_force_vector(beam, force):
     return displacement
 
 
-def print_theoretical_check(beam, U=None):
+def print_theoretical_check(beam, force=None, U=None):
     delta_theory = cantilever_point_load_deflection(P, L, E, I)
     end_nodes = beam.get_nodes_at_max_z()
-    nodal_load = P / len(end_nodes)
+    end_face_area = beam.Lx * beam.Ly
+    traction = P / end_face_area
 
     print("Theoretical displacement check:")
-    print("  Solver load model: point load P distributed over z=L end nodes")
+    print("  Solver load model: end-face traction integrated over z=L")
     print(f"  Total P:                              {P:.3f} lb")
+    print(f"  End face area:                        {end_face_area:.3f} in^2")
+    print(f"  End face traction:                    {traction:.6f} psi")
     print(f"  End nodes loaded:                     {len(end_nodes)}")
-    print(f"  Load per end node:                    {nodal_load:.6f} lb")
+    if force is not None:
+        assembled_load = force[beam.global_dofs[end_nodes, LOAD_DOF]].sum()
+        print(f"  Integrated load on end nodes:         {assembled_load:.6f} lb")
     print("  Formula:                              delta = P L^3 / (3 E I)")
     print(f"  I:                                    {I:.6f} in^4")
     print(f"  Theoretical free-end uy:              {delta_theory:.3e} inches")
@@ -86,13 +129,13 @@ def print_theoretical_check(beam, U=None):
 
 def main():
     beam = build_beam()
-    force, _, _ = build_end_point_load_vector(beam)
+    force, _, _ = build_end_face_traction_load_vector(beam)
 
-    print_theoretical_check(beam)
+    print_theoretical_check(beam, force)
     print("Solving finite element system...", flush=True)
     U = solve_with_force_vector(beam, force)
     np.save(OUTPUT_PATH, U)
-    print_theoretical_check(beam, U)
+    print_theoretical_check(beam, force, U)
 
     strain = beam.get_strain_at_center(elem_idx=1920, U=U)
     strain_labels = ("exx", "eyy", "ezz", "exy", "eyz", "exz")
