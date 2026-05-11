@@ -59,22 +59,19 @@ def validate_displacement_vector(beam, U):
         )
 
 
-def get_marker_size(beam, scale=0.45):
-    dx = beam.Lx / (beam.nx - 1)
-    dy = beam.Ly / (beam.ny - 1)
-    dz = beam.Lz / (beam.nz - 1)
-    return min(dx, dy, dz) * scale
-
-
-def add_fixed_node_cubes(plotter, beam, cube_size=None):
+def add_pinned_node_cubes(plotter, beam, cube_size=None):
     if cube_size is None:
-        cube_size = get_marker_size(beam)
+        dx = beam.Lx / (beam.nx - 1)
+        dy = beam.Ly / (beam.ny - 1)
+        dz = beam.Lz / (beam.nz - 1)
+        cube_size = 0.35 * min(dx, dy, dz)
 
     fixed_points = beam.get_all_points()[beam.get_nodes_at_min_z()]
+    offset = np.array([0, 0, 0])
 
     for point in fixed_points:
         cube = pv.Cube(
-            center=point,
+            center=point + offset,
             x_length=cube_size,
             y_length=cube_size,
             z_length=cube_size,
@@ -82,11 +79,18 @@ def add_fixed_node_cubes(plotter, beam, cube_size=None):
         plotter.add_mesh(
             cube,
             color="#e84a5f",
-            opacity=0.95,
+            opacity=0.35,
             show_edges=True,
             edge_color="#7f1d1d",
-            line_width=1.2,
+            line_width=1.0,
         )
+
+    plotter.add_points(
+        fixed_points,
+        color="#111111",
+        point_size=14,
+        render_points_as_spheres=True,
+    )
 
 
 def get_displacement_summary(beam, U_reshaped):
@@ -135,9 +139,9 @@ def show_view(results_path=DEFAULT_RESULTS_PATH, warp_factor=1.0):
         edge_color="#263238",
         line_width=0.6,
     )
-    add_fixed_node_cubes(plotter, beam)
+    add_pinned_node_cubes(plotter, beam)
     plotter.add_text(
-        "Solved beam displacement with Dirichlet fixed nodes at z = 0",
+        "Solved beam displacement with pinned nodes at z = 0",
         position="upper_left",
         font_size=14,
         color="#111111",
@@ -154,6 +158,14 @@ def show_view(results_path=DEFAULT_RESULTS_PATH, warp_factor=1.0):
         position="upper_right",
         font_size=6,
         color="#111111",
+    )
+    plotter.show_bounds(
+        bounds=warped_grid.bounds,
+        grid="front",
+        location="outer",
+        xtitle="x",
+        ytitle="y",
+        ztitle="z",
     )
     plotter.add_axes()
     plotter.show()
