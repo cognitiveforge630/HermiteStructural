@@ -51,7 +51,7 @@ View the saved displacement result:
 py view.py
 ```
 
-The viewer shows the solved beam, pinned nodes at `z = 0`, displacement
+The viewer shows the solved beam, Dirichlet fixed nodes at `z = 0`, displacement
 magnitude, and a small overlay comparing theoretical and actual free-end
 displacement.
 
@@ -59,7 +59,7 @@ displacement.
 
 - `checkme.py` computes the beam-table theoretical deflection for a free-end
   point load.
-- `solver.py` distributes the same total point load across the free-end nodes,
+- `solver.py` integrates the same total load over the free-end face,
   solves the model, and prints displacement and strain checks.
 - `view.py` opens the PyVista displacement view.
 - `tutorial_01_mesh_and_boundary_conditions.md` introduces the mesh and fixed

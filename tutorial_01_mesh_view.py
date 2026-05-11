@@ -1,4 +1,4 @@
-"""Tutorial 01: visualize the beam mesh and pinned boundary nodes.
+"""Tutorial 01: visualize the beam mesh and Dirichlet boundary nodes.
 
 This script is intentionally focused on geometry and boundary conditions.
 It does not assemble the stiffness matrix or solve the finite element system.
@@ -7,7 +7,7 @@ Run:
     py tutorial_01_mesh_view.py
 
 Optional:
-    py tutorial_01_mesh_view.py --screenshot outputs/beam_mesh_pinned_nodes.png
+    py tutorial_01_mesh_view.py --screenshot outputs/beam_mesh_dirichlet_nodes.png
 """
 
 from __future__ import annotations
@@ -55,7 +55,7 @@ def describe_mesh(beam: FEMHermiteBeamRegion) -> None:
     """Print the counts and spacings students should verify first."""
     n_nodes = beam.get_all_points().shape[0]
     n_elements = beam.get_num_elements()
-    pinned_nodes = beam.get_nodes_at_min_z()
+    fixed_nodes = beam.get_nodes_at_min_z()
 
     dx = beam.Lx / (beam.nx - 1)
     dy = beam.Ly / (beam.ny - 1)
@@ -69,18 +69,29 @@ def describe_mesh(beam: FEMHermiteBeamRegion) -> None:
     print(f"  total nodes: {n_nodes}")
     print(f"  total hex elements: {n_elements}")
     print("Boundary condition")
-    print(f"  pinned face: z = 0")
-    print(f"  pinned nodes: {len(pinned_nodes)}")
-    print(f"  fixed dofs: {len(pinned_nodes) * beam.ndof_per_node}")
+    print(f"  Dirichlet node set: nodes with z = 0")
+    print(f"  fixed nodes: {len(fixed_nodes)}")
+    print(f"  fixed dofs: {len(fixed_nodes) * beam.ndof_per_node}")
     print(f"  dofs per node: {beam.ndof_per_node} (ux, uy, uz, phix, phiy, phiz)")
 
 
-def add_pinned_node_cubes(
+def get_marker_size(beam: FEMHermiteBeamRegion, scale: float = 0.45) -> float:
+    """Keep support markers separated so they read as nodes, not a face."""
+    dx = beam.Lx / (beam.nx - 1)
+    dy = beam.Ly / (beam.ny - 1)
+    dz = beam.Lz / (beam.nz - 1)
+    return min(dx, dy, dz) * scale
+
+
+def add_fixed_node_cubes(
     plotter: pv.Plotter,
     beam: FEMHermiteBeamRegion,
-    cube_size: float = 0.9,
+    cube_size: float | None = None,
 ) -> None:
-    """Draw small cubes at every fully fixed node on the z=0 face."""
+    """Draw one cube centered on every fully fixed node."""
+    if cube_size is None:
+        cube_size = get_marker_size(beam)
+
     fixed_points = beam.get_all_points()[beam.get_nodes_at_min_z()]
 
     for point in fixed_points:
@@ -90,7 +101,14 @@ def add_pinned_node_cubes(
             y_length=cube_size,
             z_length=cube_size,
         )
-        plotter.add_mesh(cube, color="#e84a5f", opacity=0.95)
+        plotter.add_mesh(
+            cube,
+            color="#e84a5f",
+            opacity=0.95,
+            show_edges=True,
+            edge_color="#7f1d1d",
+            line_width=1.2,
+        )
 
 
 def make_plot(screenshot: Path | None = None) -> None:
@@ -107,10 +125,10 @@ def make_plot(screenshot: Path | None = None) -> None:
         line_width=1,
         opacity=0.35,
     )
-    add_pinned_node_cubes(plotter, beam)
+    add_fixed_node_cubes(plotter, beam)
 
     plotter.add_text(
-        "Hermite beam mesh: pinned nodes at z = 0",
+        "Hermite beam mesh: Dirichlet fixed nodes at z = 0",
         position="upper_left",
         font_size=14,
         color="#111111",
@@ -124,8 +142,8 @@ def make_plot(screenshot: Path | None = None) -> None:
     )
     plotter.add_axes()
     plotter.camera_position = [
-        (95.0, -135.0, 95.0),
-        (0.0, 0.0, 60.0),
+        (55.0, -85.0, 42.0),
+        (0.0, 0.0, 18.0),
         (0.0, 0.0, 1.0),
     ]
 
@@ -139,7 +157,7 @@ def make_plot(screenshot: Path | None = None) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Show the Hermite beam mesh and the pinned z=0 nodes."
+        description="Show the Hermite beam mesh and the fixed z=0 nodes."
     )
     parser.add_argument(
         "--screenshot",

@@ -24,9 +24,10 @@ elements. Each node has six degrees of freedom:
 ux, uy, uz, phix, phiy, phiz
 ```
 
-The first boundary condition is a fully pinned face at `z = 0`. Since that face
+The first boundary condition is a Dirichlet node set at `z = 0`. Since that end
 contains `nx * ny = 45` nodes, the model fixes `45 * 6 = 270` degrees of
-freedom before solving.
+freedom before solving. The boundary condition is applied to nodal degrees of
+freedom, not to a filled-in solid face.
 
 ## Run the Mesh View
 
@@ -39,13 +40,13 @@ py tutorial_01_mesh_view.py
 To save a screenshot for the blog tutorial, run:
 
 ```powershell
-py tutorial_01_mesh_view.py --screenshot outputs/beam_mesh_pinned_nodes.png
+py tutorial_01_mesh_view.py --screenshot outputs/beam_mesh_dirichlet_nodes.png
 ```
 
 The mesh view draws:
 
 - the hexahedral beam mesh as a wireframe,
-- red cubes at the pinned nodes on `z = 0`.
+- red cubes centered on the fixed nodes at `z = 0`.
 
 This gives students a concrete first picture of what the solver is about to
 turn into matrices.
