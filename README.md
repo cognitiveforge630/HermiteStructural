@@ -83,3 +83,9 @@ The current model is intentionally exploratory. The theoretical check and finite
 element result are kept side by side so stiffness, loading, boundary condition,
 and Hermite rotation-scaling assumptions can be reviewed as the formulation
 evolves.
+
+## Current State
+
+[Hermite beam theoretical check](https://cognitiveforge630.github.io/cognitiveforge.github.io/2026/05/10/hermite-beam-theoretical-check.html?v=2697cb6)
+
+![Current HermiteStructural state](Screenshot%202026-05-11%20174755.png)
