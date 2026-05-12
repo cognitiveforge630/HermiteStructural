@@ -1,7 +1,17 @@
 # HermiteStructural
 
-Finite element tutorials and source code for experimenting with a Hermite-style
-structural beam model in Python.
+Finite element tutorials and source code for experimenting with a Hermite
+hexahedral structural model in Python.
+
+The current assembly follows a Hermitian Hexa8-style formulation with six
+degrees of freedom per node. Translation DOFs use `NH` shape functions, rotation
+DOFs use `RH` shape functions, and stiffness is assembled from the standard
+six-component small-strain matrix. Rotational DOFs are coupled into
+displacement through the small-rotation relation `u = theta x r`.
+
+The element uses two-point Gauss integration by default. Three-point integration
+over-stiffens this Hermitian bending formulation on the cantilever benchmark,
+while one-point integration is unstable.
 
 This repository starts with a cantilever beam example, a theoretical point-load
 check, a solver, and PyVista visualization tools. The goal is to keep the math,
@@ -70,5 +80,6 @@ displacement.
 ## Notes
 
 The current model is intentionally exploratory. The theoretical check and finite
-element result are kept side by side so stiffness, loading, and boundary
-condition assumptions can be reviewed as the formulation evolves.
+element result are kept side by side so stiffness, loading, boundary condition,
+and Hermite rotation-scaling assumptions can be reviewed as the formulation
+evolves.

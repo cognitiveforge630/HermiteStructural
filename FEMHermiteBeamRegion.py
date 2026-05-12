@@ -12,6 +12,13 @@ DOF_MY = 4
 DOF_MZ = 5
 
 class FEMHermiteBeamRegion:
+    """8-node hexahedral solid with Hermitian translation/rotation shapes.
+
+    Each node has translations ``u, v, w`` and rotations ``theta_u, theta_v,
+    theta_w``. The active stiffness follows the Hermitian Hexa8 formulation:
+    translation DOFs use ``NH`` shape functions and rotation DOFs use ``RH``
+    shape functions in a standard 6-component small-strain matrix.
+    """
     def __init__(self, Lx, Ly, Lz, nx, ny, nz, E, nu, gamma, w, tol=1e-8, l_c=0.001, H_scale=1.0):
         self.Lx = Lx
         self.Ly = Ly
@@ -38,9 +45,11 @@ class FEMHermiteBeamRegion:
         self._elems_max_z = self.get_elements_at_max_z()
         self._nodes_min_z = self.get_nodes_at_min_z()
         self._nodes_max_z = self.get_nodes_at_max_z()
-        self.D_stretch = self._build_D_stretch()
-        self.D_curv = self.gamma_c * np.eye(9)
-        self.gauss_points, self.gauss_weights = leggauss(3)
+        self.D = self.elastic_matrix()
+        # The Hermitian Hexa8 bending formulation locks under full 3-point
+        # integration on slender beams. Two-point integration is stable here
+        # and matches the cantilever benchmark without the 1-point hourglass.
+        self.gauss_points, self.gauss_weights = leggauss(2)
 
     def _generate_grid(self):
         x = np.linspace(-self.Lx/2, self.Lx/2, self.nx)
@@ -101,21 +110,6 @@ class FEMHermiteBeamRegion:
         nodes = [n for n in range(self.grid_points.shape[0]) if np.isclose(self.grid_points[n,2], max_z, atol=self.tol)]
         return nodes
 
-    def _build_D_stretch(self):
-        D = np.zeros((9,9))
-        for k in range(9):
-            gamma_flat = np.zeros(9)
-            gamma_flat[k] = 1
-            gamma = gamma_flat.reshape(3,3)
-            e = 0.5 * (gamma + gamma.T)
-            a = 0.5 * (gamma - gamma.T)
-            tr_e = np.trace(e)
-            sigma_sym = self.lambda_ * tr_e * np.eye(3) + 2 * self.mu * e
-            sigma_skew = 2 * self.mu_c * a
-            sigma = sigma_sym + sigma_skew
-            D[:,k] = sigma.ravel()
-        return D
-
     def hex8_shape_functions(self, xi, eta, zeta):
         N = 0.125 * np.array([
             (1 - xi) * (1 - eta) * (1 - zeta),
@@ -156,9 +150,7 @@ class FEMHermiteBeamRegion:
         dh4 = 0.25 * (-1 + 2*s + 3*s**2)
         return self.H_scale * np.array([dh1, dh2, dh3, dh4])
 
-    def get_hermite_shapes_and_derivs(self, xi, eta, zeta):
-        # Use element-node Hex8 translation shapes; the old cubic-only subset
-        # over-stiffens cantilever bending by breaking the standard nodal basis.
+    def get_lagrange_shapes_and_derivs(self, xi, eta, zeta):
         N_u = self.hex8_shape_functions(xi, eta, zeta)
         N_phi = N_u
         dN_dn = self.hex8_shape_derivatives(xi, eta, zeta)
@@ -170,6 +162,123 @@ class FEMHermiteBeamRegion:
         dNp_dzeta = dN_dn[2, :]
         return N_u, N_phi, dNu_dxi, dNu_deta, dNu_dzeta, dNp_dxi, dNp_deta, dNp_dzeta
 
+    def _node_axis_shape(self, s, sign):
+        H = self.hermite_H_functions(s)
+        dH = self.dhermite_H_functions(s)
+        if sign < 0:
+            return H[0], H[1], dH[0], dH[1]
+        return H[2], H[3], dH[2], dH[3]
+
+    def get_hermite_shape_functions_and_derivatives(self, xi, eta, zeta):
+        node_signs = np.array([
+            [-1, -1, -1],
+            [1, -1, -1],
+            [1, 1, -1],
+            [-1, 1, -1],
+            [-1, -1, 1],
+            [1, -1, 1],
+            [1, 1, 1],
+            [-1, 1, 1],
+        ])
+
+        NH = np.zeros(8)
+        RH = np.zeros((3, 8))
+        dNH = np.zeros((3, 8))
+        dRH = np.zeros((3, 3, 8))
+
+        for n, (sx, sy, sz) in enumerate(node_signs):
+            vx, rx, dvx, drx = self._node_axis_shape(xi, sx)
+            vy, ry, dvy, dry = self._node_axis_shape(eta, sy)
+            vz, rz, dvz, drz = self._node_axis_shape(zeta, sz)
+
+            NH[n] = vx * vy * vz
+            dNH[:, n] = [
+                dvx * vy * vz,
+                vx * dvy * vz,
+                vx * vy * dvz,
+            ]
+
+            RH[:, n] = [
+                rx * vy * vz,
+                vx * ry * vz,
+                vx * vy * rz,
+            ]
+            dRH[:, 0, n] = [drx * vy * vz, rx * dvy * vz, rx * vy * dvz]
+            dRH[:, 1, n] = [dvx * ry * vz, vx * dry * vz, vx * ry * dvz]
+            dRH[:, 2, n] = [dvx * vy * rz, vx * dvy * rz, vx * vy * drz]
+
+        return NH, RH, dNH, dRH
+
+    def get_hermite_jacobian(self, xi, eta, zeta, coords):
+        return self.hex8_shape_derivatives(xi, eta, zeta) @ coords
+
+    def get_hermite_displacement_matrices(self, xi, eta, zeta, coords):
+        NH, RH, dNH, dRH = self.get_hermite_shape_functions_and_derivatives(xi, eta, zeta)
+        length_scales = np.array([
+            0.5 * (coords[:, 0].max() - coords[:, 0].min()),
+            0.5 * (coords[:, 1].max() - coords[:, 1].min()),
+            0.5 * (coords[:, 2].max() - coords[:, 2].min()),
+        ])
+        RH = RH * length_scales[:, None]
+        dRH = dRH * length_scales[None, :, None]
+        N_disp = np.zeros((3, 48))
+        dN_dxi = np.zeros((3, 48))
+        dN_deta = np.zeros((3, 48))
+        dN_dzeta = np.zeros((3, 48))
+
+        for n in range(8):
+            col = 6 * n
+            N_disp[0, col + DOF_UX] = NH[n]
+            N_disp[1, col + DOF_UY] = NH[n]
+            N_disp[2, col + DOF_UZ] = NH[n]
+            for row, dof in enumerate((DOF_UX, DOF_UY, DOF_UZ)):
+                dN_dxi[row, col + dof] = dNH[0, n]
+                dN_deta[row, col + dof] = dNH[1, n]
+                dN_dzeta[row, col + dof] = dNH[2, n]
+
+            # Rotations enter displacement as small rigid-rotation slopes:
+            # u = theta x r. Each RH axis is scaled by the physical half-length
+            # so nodal rotations remain dimensionless.
+            rotation_couplings = (
+                (0, DOF_MY, 2, 1.0),
+                (0, DOF_MZ, 1, -1.0),
+                (1, DOF_MZ, 0, 1.0),
+                (1, DOF_MX, 2, -1.0),
+                (2, DOF_MX, 1, 1.0),
+                (2, DOF_MY, 0, -1.0),
+            )
+            for row, dof, axis, sign in rotation_couplings:
+                N_disp[row, col + dof] += sign * RH[axis, n]
+                dN_dxi[row, col + dof] += sign * dRH[0, axis, n]
+                dN_deta[row, col + dof] += sign * dRH[1, axis, n]
+                dN_dzeta[row, col + dof] += sign * dRH[2, axis, n]
+
+        return N_disp, dN_dxi, dN_deta, dN_dzeta
+
+    def get_hermite_shapes_and_derivs(self, xi, eta, zeta):
+        NH, RH, dNH, dRH = self.get_hermite_shape_functions_and_derivatives(xi, eta, zeta)
+        return NH, RH, dNH[0], dNH[1], dNH[2], dRH[0], dRH[1], dRH[2]
+
+    def build_B_matrix(self, xi, eta, zeta, coords):
+        N_disp, dN_dxi, dN_deta, dN_dzeta = self.get_hermite_displacement_matrices(xi, eta, zeta, coords)
+        J = self.get_hermite_jacobian(xi, eta, zeta, coords)
+        detJ = np.linalg.det(J)
+        J_inv = np.linalg.inv(J)
+        gradients = [
+            J_inv.T @ np.vstack((dN_dxi[row], dN_deta[row], dN_dzeta[row]))
+            for row in range(3)
+        ]
+
+        B = np.zeros((6, 48))
+        B[0, :] = gradients[0][0, :]
+        B[1, :] = gradients[1][1, :]
+        B[2, :] = gradients[2][2, :]
+        B[3, :] = gradients[0][1, :] + gradients[1][0, :]
+        B[4, :] = gradients[1][2, :] + gradients[2][1, :]
+        B[5, :] = gradients[0][2, :] + gradients[2][0, :]
+
+        return B, detJ, N_disp, None
+
     def build_global_K(self):
         num_dofs = self.grid_points.shape[0] * self.ndof_per_node
         K_data = []
@@ -179,56 +288,13 @@ class FEMHermiteBeamRegion:
             coords = self.get_element_nodes(elem_idx)
             dofs = self.get_element_global_dofs(elem_idx).ravel()
             Ke = np.zeros((48, 48))
-            for i in range(3):
-                for j in range(3):
-                    for k in range(3):
-                        xi = self.gauss_points[i]
-                        eta = self.gauss_points[j]
-                        zeta = self.gauss_points[k]
+            for i, xi in enumerate(self.gauss_points):
+                for j, eta in enumerate(self.gauss_points):
+                    for k, zeta in enumerate(self.gauss_points):
                         w = self.gauss_weights[i] * self.gauss_weights[j] * self.gauss_weights[k]
-                        dN_dn = self.hex8_shape_derivatives(xi, eta, zeta)
-                        J = dN_dn @ coords
-                        detJ = np.linalg.det(J)
-                        J_inv = np.linalg.inv(J)
-                        N_u, N_phi, dNu_dxi, dNu_deta, dNu_dzeta, dNp_dxi, dNp_deta, dNp_dzeta = self.get_hermite_shapes_and_derivs(xi, eta, zeta)
-                        dNu_dx = J_inv[0, :] @ np.array([dNu_dxi, dNu_deta, dNu_dzeta])
-                        dNu_dy = J_inv[1, :] @ np.array([dNu_dxi, dNu_deta, dNu_dzeta])
-                        dNu_dz = J_inv[2, :] @ np.array([dNu_dxi, dNu_deta, dNu_dzeta])
-                        dNp_dx = J_inv[0, :] @ np.array([dNp_dxi, dNp_deta, dNp_dzeta])
-                        dNp_dy = J_inv[1, :] @ np.array([dNp_dxi, dNp_deta, dNp_dzeta])
-                        dNp_dz = J_inv[2, :] @ np.array([dNp_dxi, dNp_deta, dNp_dzeta])
-                        B_gamma = np.zeros((9, 48))
-                        B_curv = np.zeros((9, 48))
-                        for n in range(8):
-                            col_trans = 6 * n
-                            col_rot = 6 * n + 3
-                            B_gamma[0, col_trans + 0] = dNu_dx[n]
-                            B_gamma[1, col_trans + 0] = dNu_dy[n]
-                            B_gamma[2, col_trans + 0] = dNu_dz[n]
-                            B_gamma[3, col_trans + 1] = dNu_dx[n]
-                            B_gamma[4, col_trans + 1] = dNu_dy[n]
-                            B_gamma[5, col_trans + 1] = dNu_dz[n]
-                            B_gamma[6, col_trans + 2] = dNu_dx[n]
-                            B_gamma[7, col_trans + 2] = dNu_dy[n]
-                            B_gamma[8, col_trans + 2] = dNu_dz[n]
-                            B_gamma[1, col_rot + 2] = N_phi[n]
-                            B_gamma[2, col_rot + 1] = -N_phi[n]
-                            B_gamma[3, col_rot + 2] = -N_phi[n]
-                            B_gamma[5, col_rot + 0] = N_phi[n]
-                            B_gamma[6, col_rot + 1] = N_phi[n]
-                            B_gamma[7, col_rot + 0] = -N_phi[n]
-                            B_curv[0, col_rot + 0] = dNp_dx[n]
-                            B_curv[1, col_rot + 0] = dNp_dy[n]
-                            B_curv[2, col_rot + 0] = dNp_dz[n]
-                            B_curv[3, col_rot + 1] = dNp_dx[n]
-                            B_curv[4, col_rot + 1] = dNp_dy[n]
-                            B_curv[5, col_rot + 1] = dNp_dz[n]
-                            B_curv[6, col_rot + 2] = dNp_dx[n]
-                            B_curv[7, col_rot + 2] = dNp_dy[n]
-                            B_curv[8, col_rot + 2] = dNp_dz[n]
+                        B, detJ, _, _ = self.build_B_matrix(xi, eta, zeta, coords)
                         w_det = w * detJ
-                        Ke += B_gamma.T @ self.D_stretch @ B_gamma * w_det
-                        Ke += B_curv.T @ self.D_curv @ B_curv * w_det
+                        Ke += B.T @ self.D @ B * w_det
             for a in range(48):
                 for b in range(48):
                     K_row.append(dofs[a])
@@ -245,22 +311,18 @@ class FEMHermiteBeamRegion:
             coords = self.get_element_nodes(elem_idx)
             dofs = self.get_element_global_dofs(elem_idx).ravel()
             Fe = np.zeros(48)
-            for i in range(3):
-                for j in range(3):
-                    for k in range(3):
-                        xi = self.gauss_points[i]
-                        eta = self.gauss_points[j]
-                        zeta = self.gauss_points[k]
+            for i, xi in enumerate(self.gauss_points):
+                for j, eta in enumerate(self.gauss_points):
+                    for k, zeta in enumerate(self.gauss_points):
                         w = self.gauss_weights[i] * self.gauss_weights[j] * self.gauss_weights[k]
-                        dN_dn = self.hex8_shape_derivatives(xi, eta, zeta)
-                        J = dN_dn @ coords
+                        J = self.get_hermite_jacobian(xi, eta, zeta, coords)
                         detJ = np.linalg.det(J)
-                        N_u, _, _, _, _, _, _, _ = self.get_hermite_shapes_and_derivs(xi, eta, zeta)
-                        N_trans = np.zeros((3, 48))
+                        NH, _, _, _ = self.get_hermite_shape_functions_and_derivatives(xi, eta, zeta)
+                        N_disp = np.zeros((3, 48))
                         for n in range(8):
-                            col = 6*n
-                            N_trans[:, col:col+3] = N_u[n] * np.eye(3)
-                        Fe += N_trans.T @ body_force * w * detJ
+                            col = 6 * n
+                            N_disp[:, col:col+3] = NH[n] * np.eye(3)
+                        Fe += N_disp.T @ body_force * w * detJ
             F[dofs] += Fe
         surface_force = np.array([0, 0, self.w])
         for elem_idx in self._elems_max_z:
@@ -268,24 +330,21 @@ class FEMHermiteBeamRegion:
             dofs = self.get_element_global_dofs(elem_idx).ravel()
             Fe = np.zeros(48)
             face_nodes = [4,5,6,7]
-            for i in range(3):
-                for j in range(3):
-                    xi = self.gauss_points[i]
-                    eta = self.gauss_points[j]
+            for i, xi in enumerate(self.gauss_points):
+                for j, eta in enumerate(self.gauss_points):
                     zeta = 1.0
                     w = self.gauss_weights[i] * self.gauss_weights[j]
-                    N_u, _, _, _, _, _, _, _ = self.get_hermite_shapes_and_derivs(xi, eta, zeta)
-                    dN_dn = self.hex8_shape_derivatives(xi, eta, zeta)
-                    J = dN_dn @ coords
-                    dx_dxi = J[:,0]
-                    dx_deta = J[:,1]
+                    NH, _, _, _ = self.get_hermite_shape_functions_and_derivatives(xi, eta, zeta)
+                    J = self.get_hermite_jacobian(xi, eta, zeta, coords)
+                    dx_dxi = J[0, :]
+                    dx_deta = J[1, :]
                     cross = np.cross(dx_dxi, dx_deta)
                     detJs = np.linalg.norm(cross)
-                    N_trans = np.zeros((3, 48))
-                    for nn in face_nodes:
-                        col = 6*nn
-                        N_trans[:, col:col+3] = N_u[nn] * np.eye(3)
-                    Fe += N_trans.T @ surface_force * w * detJs
+                    N_disp = np.zeros((3, 48))
+                    for n in range(8):
+                        col = 6 * n
+                        N_disp[:, col:col+3] = NH[n] * np.eye(3)
+                    Fe += N_disp.T @ surface_force * w * detJs
             F[dofs] += Fe
         return F
 
@@ -308,26 +367,9 @@ class FEMHermiteBeamRegion:
         coords = self.get_element_nodes(elem_idx)
         dofs = self.get_element_global_dofs(elem_idx).ravel()
         U_e = U[dofs]
-        U_trans = U_e.reshape(8,6)[:,:3]
-        U_rot = U_e.reshape(8,6)[:,3:]
         xi, eta, zeta = 0.0, 0.0, 0.0
-        N_u, N_phi, dNu_dxi, dNu_deta, dNu_dzeta, _, _, _ = self.get_hermite_shapes_and_derivs(xi, eta, zeta)
-        dN_dn = self.hex8_shape_derivatives(xi, eta, zeta)
-        J = dN_dn @ coords
-        J_inv = np.linalg.inv(J)
-        dNu_dx = dNu_dxi * J_inv[0,0] + dNu_deta * J_inv[0,1] + dNu_dzeta * J_inv[0,2]
-        dNu_dy = dNu_dxi * J_inv[1,0] + dNu_deta * J_inv[1,1] + dNu_dzeta * J_inv[1,2]
-        dNu_dz = dNu_dxi * J_inv[2,0] + dNu_deta * J_inv[2,1] + dNu_dzeta * J_inv[2,2]
-        dNu_dxyz = np.vstack((dNu_dx, dNu_dy, dNu_dz))
-        du_dxyz = U_trans.T @ dNu_dxyz.T
-        phi = U_rot.T @ N_phi
-        skew_phi = np.array([[0, -phi[2], phi[1]],
-                             [phi[2], 0, -phi[0]],
-                             [-phi[1], phi[0], 0]])
-        gamma = du_dxyz - skew_phi
-        e_sym = 0.5 * (gamma + gamma.T)
-        strain_voigt = np.array([e_sym[0,0], e_sym[1,1], e_sym[2,2], e_sym[0,1], e_sym[1,2], e_sym[0,2]])
-        return strain_voigt
+        B, _, _, _ = self.build_B_matrix(xi, eta, zeta, coords)
+        return B @ U_e
     
     def get_all_points(self):
         return self.grid_points

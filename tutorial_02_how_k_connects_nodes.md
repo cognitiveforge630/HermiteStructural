@@ -10,6 +10,10 @@ For this beam, each node has six degrees of freedom:
 ux, uy, uz, phix, phiy, phiz
 ```
 
+The `phi` degrees of freedom are nodal rotations. In the Hermitian hexahedron,
+translation DOFs are interpolated with `NH` functions and rotation DOFs are
+interpolated with `RH` functions.
+
 Each hexahedral element has eight nodes. So one element works with:
 
 ```text

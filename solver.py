@@ -8,9 +8,6 @@ OUTPUT_PATH = "U.npy"
 LOAD_DOF = 1  # uy: transverse bending load direction
 
 
-FACE_NODES_MAX_Z = (4, 5, 6, 7)
-
-
 def build_beam():
     return FEMHermiteBeamRegion(
         Lx=4.0,
@@ -47,25 +44,21 @@ def build_end_face_traction_load_vector(beam, total_load=P, load_dof=LOAD_DOF):
         dofs = beam.get_element_global_dofs(elem_idx).ravel()
         Fe = np.zeros(beam.ndof_per_node * 8)
 
-        for i in range(3):
-            for j in range(3):
-                xi = beam.gauss_points[i]
-                eta = beam.gauss_points[j]
+        for i, xi in enumerate(beam.gauss_points):
+            for j, eta in enumerate(beam.gauss_points):
                 zeta = 1.0
                 weight = beam.gauss_weights[i] * beam.gauss_weights[j]
-                N_u, _, _, _, _, _, _, _ = beam.get_hermite_shapes_and_derivs(
-                    xi, eta, zeta
+                N_disp, _, _, _ = beam.get_hermite_displacement_matrices(
+                    xi, eta, zeta, coords
                 )
-                dN_dn = beam.hex8_shape_derivatives(xi, eta, zeta)
-                J = dN_dn @ coords
+                J = beam.get_hermite_jacobian(xi, eta, zeta, coords)
                 dx_dxi = J[0, :]
                 dx_deta = J[1, :]
                 detJs = np.linalg.norm(np.cross(dx_dxi, dx_deta))
 
-                for local_node in FACE_NODES_MAX_Z:
-                    Fe[beam.ndof_per_node * local_node + load_dof] += (
-                        N_u[local_node] * traction * weight * detJs
-                    )
+                unit_traction = np.zeros(3)
+                unit_traction[load_dof] = traction
+                Fe += N_disp.T @ unit_traction * weight * detJs
 
         force[dofs] += Fe
 

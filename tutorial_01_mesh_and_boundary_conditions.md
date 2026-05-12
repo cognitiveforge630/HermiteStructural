@@ -24,6 +24,10 @@ elements. Each node has six degrees of freedom:
 ux, uy, uz, phix, phiy, phiz
 ```
 
+Here `phi` is the nodal rotation field used by the Hermitian hexahedron. The
+active element has six degrees of freedom per node: three translations and
+three rotations.
+
 The first boundary condition is a Dirichlet node set at `z = 0`. Since that end
 contains `nx * ny = 45` nodes, the model fixes `45 * 6 = 270` degrees of
 freedom before solving. The boundary condition is applied to nodal degrees of
