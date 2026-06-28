@@ -134,7 +134,18 @@ def show_view(results_path=DEFAULT_RESULTS_PATH, warp_factor=1.0):
         warped_grid,
         scalars="disp_magnitude",
         cmap="coolwarm",
-        scalar_bar_args={"title": "Displacement Magnitude"},
+        scalar_bar_args={
+            "title": "Displacement Magnitude",
+            "title_font_size": 22,
+            "label_font_size": 10,
+            "n_labels": 5,
+            "fmt": "%.3g",
+            "height": 0.08,
+            "width": 0.55,
+            "position_x": 0.32,
+            "position_y": 0.05,
+            "vertical": False,
+        },
         show_edges=True,
         edge_color="#263238",
         line_width=0.6,
@@ -143,7 +154,7 @@ def show_view(results_path=DEFAULT_RESULTS_PATH, warp_factor=1.0):
     plotter.add_text(
         "Solved beam displacement with pinned nodes at z = 0",
         position="upper_left",
-        font_size=14,
+        font_size=3,
         color="#111111",
     )
     plotter.add_text(
@@ -156,7 +167,7 @@ def show_view(results_path=DEFAULT_RESULTS_PATH, warp_factor=1.0):
             ]
         ),
         position="upper_right",
-        font_size=6,
+        font_size=3,
         color="#111111",
     )
     plotter.show_bounds(
@@ -166,6 +177,12 @@ def show_view(results_path=DEFAULT_RESULTS_PATH, warp_factor=1.0):
         xtitle="x",
         ytitle="y",
         ztitle="z",
+        font_size=8,
+        bold=False,
+        n_xlabels=3,
+        n_ylabels=3,
+        n_zlabels=5,
+        fmt="%.0f",
     )
     plotter.add_axes()
     plotter.show()
