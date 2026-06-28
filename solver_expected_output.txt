@@ -1,0 +1,69 @@
+Theoretical displacement check (orthotropic seed):
+  Solver load model: end-face traction integrated over z=L
+  Material model: orthotropic Redwood/AWC D matrix
+  Gauss integration order:              3-point
+  Total P:                              -12.800 lb
+  End face area:                        32.000 in^2
+  End face traction:                    -0.400000 psi
+  End nodes loaded:                     45
+  Integrated load on end nodes:         -12.800000 lb
+  Formula:                              delta = P L^3 / (3 E I)
+  I:                                    170.666667 in^4
+  AWC/reference E for target:           2000000.000 psi
+  Solver orthotropic Ez:                2000000.000 psi
+  Target theoretical free-end uy:       -2.160e-02 inches
+  FEA displacement: pending solve
+
+Solving seed finite element system...
+Theoretical displacement check (orthotropic seed):
+  Solver load model: end-face traction integrated over z=L
+  Material model: orthotropic Redwood/AWC D matrix
+  Gauss integration order:              3-point
+  Total P:                              -12.800 lb
+  End face area:                        32.000 in^2
+  End face traction:                    -0.400000 psi
+  End nodes loaded:                     45
+  Integrated load on end nodes:         -12.800000 lb
+  Formula:                              delta = P L^3 / (3 E I)
+  I:                                    170.666667 in^4
+  AWC/reference E for target:           2000000.000 psi
+  Solver orthotropic Ez:                2000000.000 psi
+  Target theoretical free-end uy:       -2.160e-02 inches
+  FEA free-end uy:                      -1.815e-02 inches
+  Difference vs AWC/theory target:      15.966552%
+  FEA max displacement magnitude:       1.817e-02 inches
+
+E calibration:
+  seed Ez:                              2000000.000000 psi
+  seed FEA uy:                          -1.815122484954e-02 in
+  target uy:                            -2.160000000000e-02 in
+  Formula:                              E_calibrated = E_seed * u_seed / u_target
+  calibrated Ez:                        1680668.967550 psi
+
+Solving calibrated finite element system...
+Theoretical displacement check (orthotropic calibrated):
+  Solver load model: end-face traction integrated over z=L
+  Material model: orthotropic Redwood/AWC D matrix
+  Gauss integration order:              3-point
+  Total P:                              -12.800 lb
+  End face area:                        32.000 in^2
+  End face traction:                    -0.400000 psi
+  End nodes loaded:                     45
+  Integrated load on end nodes:         -12.800000 lb
+  Formula:                              delta = P L^3 / (3 E I)
+  I:                                    170.666667 in^4
+  AWC/reference E for target:           2000000.000 psi
+  Solver orthotropic Ez:                1680668.968 psi
+  Target theoretical free-end uy:       -2.160e-02 inches
+  FEA free-end uy:                      -2.160e-02 inches
+  Difference vs AWC/theory target:      0.000000%
+  FEA max displacement magnitude:       2.163e-02 inches
+
+Strain at element 1920:
+  exx: 1.897116e-06
+  eyy: 2.582799e-06
+  ezz: -2.273759e-05
+  exy: -1.585775e-07
+  eyz: -7.942192e-06
+  exz: 2.012386e-06
+Saved displacement vector to U.npy

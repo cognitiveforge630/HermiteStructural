@@ -1,0 +1,19 @@
+Hermite cantilever displacement convergence study
+  load model              : end-face traction integrated over z=L
+  boundary condition      : fixed-free cantilever; all DOFs fixed at z=0
+  seed/reference Ez       : 2000000.000000 psi
+  target free-end uy      : -2.160000000000e-02 in
+  current solver.py mesh  : 4x8x120 elements = 5x9x121 nodes
+
+lvl  elems         nodes    dofs    h(in)       free-end uy(in)  chg uy %   implied Ez(psi)  chg Ez %   eq rel
+--------------------------------------------------------------------------------------------------------------
+  1  1x2x30          186     1116  4/4/4       -1.808943904e-02     first   1674948.059189     first  4.1e-12
+  2  2x4x60          915     5490  2/2/2       -1.813652179e-02     0.260   1679307.573119     0.260  1.5e-11
+  3  3x6x90         2548    15288  1.33/1.33/1.33  -1.814710802e-02     0.058   1680287.779850     0.058  3.5e-11
+  4  4x8x120        5445    32670  1/1/1       -1.815122485e-02     0.023   1680668.967550     0.023  1.2e-10
+
+Current-mesh convergence anchor:
+  Last two mesh levels change in free-end uy: 0.022681% (3x6x90 -> 4x8x120 elements)
+  Last two mesh levels change in implied calibrated Ez: 0.022681%
+  Calibrated Ez implied by current solver.py mesh: 1680668.967550 psi
+

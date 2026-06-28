@@ -1,0 +1,24 @@
+diff --git a/solver.py b/solver.py
+index 27ba9ac..a833fc4 100644
+--- a/solver.py
++++ b/solver.py
+@@ -65,15 +65,15 @@ def calibrated_longitudinal_E(seed_E, seed_fea_uy, target_uy=REFERENCE_TARGET_UY
+     return seed_E * ratio
+ 
+ 
+-def build_beam(E_longitudinal=REFERENCE_LONGITUDINAL_E):
++def build_beam(E_longitudinal=REFERENCE_LONGITUDINAL_E, nx=5, ny=9, nz=121):
+     material = redwood_orthotropic_material(E_longitudinal)
+     return FEMHermiteBeamRegion(
+         Lx=4.0,
+         Ly=8.0,
+         Lz=120.0,
+-        nx=5,
+-        ny=9,
+-        nz=121,
++        nx=nx,
++        ny=ny,
++        nz=nz,
+         E=E_longitudinal,
+         nu=0.3,
+         gamma=0.0,
