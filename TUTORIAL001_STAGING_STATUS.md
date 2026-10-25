@@ -1,9 +1,9 @@
-# Tutorial 001 release staging
+# Tutorial 001: staging status (2026-10-25)
 
-This branch was reserved for the Hermite-first Tutorial 001 replacement and orthotropic matrix companion. **The release files are not uploaded to this branch yet.** The parent `main` contents are unchanged on this branch.
+**This branch has NOT received the complete release tree. Do not merge it.**
 
-The tested candidate release is available as `HermiteStructural_GitHub_Release_20261024.zip` in the originating ChatGPT conversation. It contains 82 files, including historical Hermite compatibility launchers, mandatory self-weight and integrated end-face traction, Cauchy control, an orthotropic matrix companion, and run-order documentation.
+The corrected local release `HermiteStructural_Release_Corrected_20261025.zip` is available from the originating ChatGPT conversation, with `Publish-Tutorial001.ps1` for transferring both workspaces from a machine with Git authentication.
 
-Local automated checks: 9 main-workspace tests, 6 companion tests, five-file Hermite source provenance. Full-size Hermite Windows solve and viewer acceptance remain outstanding.
+Verified in the release: 11 Tutorial 001 unit tests; 6 orthotropic companion tests; five-file SHA-256 historical Hermite source identity test. Primary Hermite uses Gauss-integrated end traction (-12.800 lbf), mandatory body-force self-weight (-66.816 lbf), a combined-load AWC-style Euler–Bernoulli reference, fixed rather than calibrated orthotropic Ez, and matching console/HUD comparison.
 
-Do not merge until all source files have been uploaded and reviewed.
+Outstanding: upload the full source tree; rerun the production-sized Hermite solve; verify the PyVista screenshot on Windows; then merge reviewed changes into main. Historical Hermite source identity is not a rigorous Hermite a posteriori certificate.
