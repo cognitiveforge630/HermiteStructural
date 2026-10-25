@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Test: Hex8 unit tests",
+      "type": "shell",
+      "command": "python -m unittest discover -s tests -v",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run: Tutorial 001",
+      "type": "shell",
+      "command": "python tutorial_001.py",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "View: PyVista",
+      "type": "shell",
+      "command": "python view.py",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "View: Screenshot",
+      "type": "shell",
+      "command": "python view.py --screenshot outputs/tutorial001.png",
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}

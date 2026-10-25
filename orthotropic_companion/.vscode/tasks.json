@@ -1,0 +1,1 @@
+{"version":"2.0.0","tasks":[{"label":"01 Test orthotropic matrices","type":"shell","command":"python -m unittest discover -s tests -v","problemMatcher":[]},{"label":"02 Compare compliance and stiffness","type":"shell","command":"python compare_efunda_vs_hermite_orthotropic.py","problemMatcher":[]}]}
