@@ -1,0 +1,45 @@
+{
+  "mesh": [
+    3,
+    3,
+    5
+  ],
+  "order": 2,
+  "results": [
+    {
+      "method": "legacy",
+      "seconds": 0.05409730400003809,
+      "tracemalloc_peak_MiB": 4.956160545349121,
+      "linux_process_peak_RSS_MiB": 126.7734375,
+      "matrix_shape": [
+        675,
+        675
+      ],
+      "stored_nnz": 85833,
+      "numerical_nonzero_count": 75232,
+      "sum_global_F": [
+        0.0,
+        -79.61600000000001,
+        0.0
+      ]
+    },
+    {
+      "method": "oop",
+      "seconds": 0.04888093399995341,
+      "tracemalloc_peak_MiB": 3.0903406143188477,
+      "linux_process_peak_RSS_MiB": 125.3984375,
+      "matrix_shape": [
+        675,
+        675
+      ],
+      "stored_nnz": 75184,
+      "numerical_nonzero_count": 75184,
+      "sum_global_F": [
+        0.0,
+        -79.61600000000001,
+        0.0
+      ]
+    }
+  ],
+  "caveat": "Do not compare nnz alone; COO/CSR may store different zero entries. RSS is Linux-only here; tracemalloc is not a full RAM accounting. Results depend on environment and do not include the linear solve."
+}

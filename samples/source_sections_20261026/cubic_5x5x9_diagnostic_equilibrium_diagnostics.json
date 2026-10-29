@@ -1,0 +1,71 @@
+{
+  "status": "SAMPLED_EQUILIBRIUM_DIAGNOSTICS_NOT_CERTIFIED",
+  "certified_error_bound": false,
+  "volume_residual": {
+    "status": "SAMPLED_STRONG_FORM_RESIDUAL_NOT_CERTIFIED",
+    "units": "lbf/in^3",
+    "samples_per_source_cell": 1,
+    "gauss_order": 1,
+    "finite_difference_step_parent": 0.0001,
+    "weighted_sample_rms_div_sigma_plus_b_lbf_in3": 1.2779549929052605,
+    "maximum_sample_div_sigma_plus_b_lbf_in3": 2.9059672701693335,
+    "maximum_element_index": 97,
+    "maximum_parent_coordinates": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "certified_bound": false,
+    "caveats": "Pointwise finite-difference derivative and sampled residual, not an integral enclosure or statically admissible stress. Boundary traction defects are not covered."
+  },
+  "interface_traction_jumps": {
+    "status": "RESEARCH_RAW_STRESS_FACE_JUMPS_NOT_CERTIFIED",
+    "source_stress_evaluated_from": "D @ B @ U on both sides of face",
+    "source_face_quadrature_order": 4,
+    "stress_jump_units": "psi",
+    "per_face_normal_axis": {
+      "x": {
+        "faces": 96,
+        "area_in2": 2879.9999999999995,
+        "area_weighted_traction_jump_rms_psi": 4.625453540745052e-17,
+        "maximum_face_traction_jump_rms_psi": 1.6455587063252705e-16,
+        "maximum_face_lower_element_ijk": [
+          2,
+          3,
+          1
+        ]
+      },
+      "y": {
+        "faces": 96,
+        "area_in2": 1439.9999999999998,
+        "area_weighted_traction_jump_rms_psi": 1.6474132195682564e-13,
+        "maximum_face_traction_jump_rms_psi": 3.4696337753288176e-13,
+        "maximum_face_lower_element_ijk": [
+          0,
+          0,
+          6
+        ]
+      },
+      "z": {
+        "faces": 112,
+        "area_in2": 223.99999999999997,
+        "area_weighted_traction_jump_rms_psi": 1.699357136510341e-13,
+        "maximum_face_traction_jump_rms_psi": 5.042604483728904e-13,
+        "maximum_face_lower_element_ijk": [
+          1,
+          0,
+          5
+        ]
+      }
+    },
+    "certified_bound": false,
+    "a_posteriori_terms_not_included": [
+      "volume equilibrium residual",
+      "boundary natural traction residual",
+      "data oscillation",
+      "constitutive compliance scaling",
+      "reliability/efficiency proof",
+      "numerical enclosure"
+    ]
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "family": "Hex27_tensor_Lagrange_C0",
+  "polynomial_order": 2,
+  "original_Hermite_vertex_mesh": [
+    3,
+    3,
+    5
+  ],
+  "physical_element_divisions": [
+    2,
+    2,
+    4
+  ],
+  "continuity": "C0",
+  "DOFs_per_node": 3,
+  "interpolation_nodes_per_element": 27,
+  "nodes_per_element_face": 9,
+  "actual_global_nodes_per_direction": [
+    5,
+    5,
+    9
+  ],
+  "global_nodes": 225,
+  "free_and_fixed_translation_DOFs": 675,
+  "local_element_DOFs": 81,
+  "total_dense_COO_contributions_before_coalescing": 104976,
+  "estimated_COO_triplets_MiB": 2.4,
+  "note_memory": "Conceptual unbatched COO estimate; OOP implementation flushes batches of 8 elements into CSR. Sparse factorization may still use much more RAM.",
+  "assembly_batch_elements": 8,
+  "gauss_order_per_axis": 3,
+  "constitutive_model": "same orthotropic Redwood reference parameters as the Hermite solver",
+  "clamp": "all three translational DOFs fixed at z=0; no rotational DOFs",
+  "loading": "uniform end traction on z=L; consistently integrated body self-weight",
+  "certified_error_bound": false,
+  "research_not_certified": true,
+  "comparison_is_not_a_posteriori_bound": true,
+  "density_lbf_in3": 0.0174,
+  "end_force_lbf": -12.8,
+  "longitudinal_E_psi": 1100000.0,
+  "orthotropic_constants": {
+    "Ex": 95700.0,
+    "Ey": 97900.0,
+    "Ez": 1100000.0,
+    "nuxy": 0.373,
+    "nuxz": 0.03132,
+    "nuyz": 0.030793999999999995,
+    "Gxy": 12100.0,
+    "Gyz": 84700.0,
+    "Gxz": 72600.0
+  },
+  "reference_tip_uy_in": -0.1161490909090909,
+  "tip_max_abs_uy_in": -0.11773425504664912,
+  "tip_face_mean_uy_in": -0.1177328931581134,
+  "tip_max_vs_classical_beam_pct": 1.3647667193529098,
+  "max_midspan_shear_y_difference_pct": 72.61184944222997,
+  "max_midspan_moment_x_difference_pct": 7.955557224053441,
+  "stiffness_nnz": 75184,
+  "clamped_DOF_count": 75,
+  "equilibrium": {
+    "applied_force_xyz_lbf": [
+      0.0,
+      -79.61600000000001,
+      0.0
+    ],
+    "support_reaction_force_xyz_lbf": [
+      -1.6359891219508427e-10,
+      79.61600000034088,
+      6.178879630169831e-11
+    ],
+    "applied_moment_about_origin_xyz_lbf_in": [
+      5544.960000000003,
+      0.0,
+      5.218048215738236e-15
+    ],
+    "support_reaction_moment_about_origin_xyz_lbf_in": [
+      -5544.960000033275,
+      -1.3757016859017313e-08,
+      -3.1313618364947615e-10
+    ],
+    "force_defect_inf_lbf": 3.4086156119883526e-10,
+    "moment_defect_inf_lbf_in": 3.3272044674959034e-08,
+    "analytical_applied_Fy_lbf": -79.616,
+    "analytical_applied_Mx_lbf_in": 5544.96,
+    "analytical_resultant_force_Fy_error_lbf": -1.4210854715202004e-14,
+    "analytical_resultant_Mx_error_lbf_in": 2.7284841053187847e-12,
+    "free_DOF_relative_residual_L2": 6.776539017538054e-11,
+    "discrete_external_work_lbf_in": 4.613879264198853,
+    "discrete_FE_strain_energy_lbf_in": 2.306939632115526,
+    "Clapeyron_work_energy_relative_defect": 6.978754840690364e-12
+  },
+  "runtime_seconds": {
+    "assembly": 0.005217302999881213,
+    "linear_solve": 0.006845204000001104,
+    "total": 0.0665492930002074
+  },
+  "source_sections": [
+    {
+      "z_in": 1.4999999999999996,
+      "source_zeta": -0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": 3.896054728835807e-10,
+      "FE_shear_y_lbf": -122.7865757213813,
+      "FE_axial_force_lbf": -6.130917995506024e-11,
+      "FE_bending_moment_x_lbf_in": 5297.153752762842,
+      "beam_shear_y_lbf": -78.7808,
+      "beam_bending_moment_x_lbf_in": 5426.1624,
+      "shear_y_reference_difference_pct": 55.85850324112131,
+      "moment_x_reference_difference_pct": 2.377530153486718
+    },
+    {
+      "z_in": 28.5,
+      "source_zeta": 0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": 3.856007249614102e-10,
+      "FE_shear_y_lbf": -107.75297572138344,
+      "FE_axial_force_lbf": -6.048139766789973e-11,
+      "FE_bending_moment_x_lbf_in": 3705.3770658913536,
+      "beam_shear_y_lbf": -63.74719999999999,
+      "beam_bending_moment_x_lbf_in": 3502.0343999999996,
+      "shear_y_reference_difference_pct": 69.03169977878785,
+      "moment_x_reference_difference_pct": 5.806415433593515
+    },
+    {
+      "z_in": 31.5,
+      "source_zeta": -0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": 4.082537988225887e-10,
+      "FE_shear_y_lbf": -94.12443181156029,
+      "FE_axial_force_lbf": -5.135092351338244e-11,
+      "FE_bending_moment_x_lbf_in": 3171.821266640393,
+      "beam_shear_y_lbf": -62.07679999999999,
+      "beam_bending_moment_x_lbf_in": 3313.2983999999997,
+      "shear_y_reference_difference_pct": 51.625779375805934,
+      "moment_x_reference_difference_pct": 4.269978621895535
+    },
+    {
+      "z_in": 58.5,
+      "source_zeta": 0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": 3.747248240870693e-10,
+      "FE_shear_y_lbf": -79.09083181160432,
+      "FE_axial_force_lbf": -4.6124881691866904e-11,
+      "FE_bending_moment_x_lbf_in": 1940.739325064997,
+      "beam_shear_y_lbf": -47.0432,
+      "beam_bending_moment_x_lbf_in": 1840.1783999999998,
+      "shear_y_reference_difference_pct": 68.12383471278382,
+      "moment_x_reference_difference_pct": 5.464737824604249
+    },
+    {
+      "z_in": 61.49999999999999,
+      "source_zeta": -0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": 3.18039927726943e-10,
+      "FE_shear_y_lbf": -67.40265422602916,
+      "FE_axial_force_lbf": -3.3427483003833913e-11,
+      "FE_bending_moment_x_lbf_in": 1589.2285103169208,
+      "beam_shear_y_lbf": -45.3728,
+      "beam_bending_moment_x_lbf_in": 1701.5544000000004,
+      "shear_y_reference_difference_pct": 48.55299700708168,
+      "moment_x_reference_difference_pct": 6.601369294045465
+    },
+    {
+      "z_in": 88.5,
+      "source_zeta": 0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": 1.9633499123358766e-10,
+      "FE_shear_y_lbf": -52.36905422597703,
+      "FE_axial_force_lbf": -2.934896770057094e-11,
+      "FE_bending_moment_x_lbf_in": 733.4958289364821,
+      "beam_shear_y_lbf": -30.339199999999998,
+      "beam_bending_moment_x_lbf_in": 679.4424,
+      "shear_y_reference_difference_pct": 72.61184944222997,
+      "moment_x_reference_difference_pct": 7.955557224053441
+    },
+    {
+      "z_in": 91.5,
+      "source_zeta": -0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": 1.1987358067983012e-10,
+      "FE_shear_y_lbf": -40.651499045744444,
+      "FE_axial_force_lbf": -2.793854037008714e-11,
+      "FE_bending_moment_x_lbf_in": 514.4063516797794,
+      "beam_shear_y_lbf": -28.668799999999997,
+      "beam_bending_moment_x_lbf_in": 590.9304,
+      "shear_y_reference_difference_pct": 41.797002475668485,
+      "moment_x_reference_difference_pct": 12.94975657373873
+    },
+    {
+      "z_in": 118.5,
+      "source_zeta": 0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": 2.2622953965885373e-11,
+      "FE_shear_y_lbf": -25.61789904552803,
+      "FE_axial_force_lbf": -1.840416707921122e-12,
+      "FE_bending_moment_x_lbf_in": 33.80105775542399,
+      "beam_shear_y_lbf": -13.635200000000001,
+      "beam_bending_moment_x_lbf_in": 19.826400000000003,
+      "shear_y_reference_difference_pct": 87.88062548057988,
+      "moment_x_reference_difference_pct": 70.4850994402614
+    }
+  ],
+  "caveat": "1D beam theory is not the exact 3D elasticity solution. The stress is raw constitutive Cauchy stress, not equilibrated; the clamped translation trace is not the Hermite fixed-spin boundary condition. No certified error estimate.",
+  "field_summary": {
+    "field_archive": "samples/hex27_3x3x5_fields.npz",
+    "stress_sampling": "inset_subcell_corners_v2: 8 direct FE samples per visualization subcell, fraction 0.95",
+    "sampled_stress_points": 1024,
+    "visualization_subcells": 128,
+    "fe_max_tension_zz_psi": 126.57408939270334,
+    "fe_max_compression_zz_psi": 126.57408939273135,
+    "fe_max_von_mises_psi": 120.78376477248057,
+    "max_displacement_magnitude_in": 0.11785680716861337,
+    "beam_reference_max_tension_zz_psi": 127.64540298339844,
+    "beam_reference_max_compression_zz_psi": 127.64540298339844,
+    "beam_reference_max_von_mises_psi": 127.64550347332677,
+    "sample_extrema_not_global_maxima": true,
+    "smoke_test_not_validated_stress": true
+  },
+  "polynomial_patch_tests": {
+    "order": 2,
+    "max_absolute_errors": {
+      "partition_unity": 2.220446049250313e-16,
+      "derivative_partition": 1.46150452851046e-16,
+      "affine_displacement": 2.220446049250313e-16,
+      "affine_gradient": 3.0704605524789486e-16,
+      "tensor_product_polynomial": 3.3306690738754696e-16,
+      "tensor_product_polynomial_gradient": 4.440892098500626e-16
+    },
+    "passed": true,
+    "certified_error_bound": false
+  },
+  "one_cell_mechanics_tests": {
+    "order": 2,
+    "residuals": {
+      "force_y_error_lbf": 0.0,
+      "total_force_xz_abs_lbf": 0.0,
+      "applied_moment_x_error_lbf_in": 0.0,
+      "rigid_translation_rotation_relative_K_residual": 6.444923931491765e-17,
+      "constant_strain_relative_energy_error": 1.0280210427717763e-15,
+      "local_stiffness_symmetry_relative_error": 1.0195459996322918e-16
+    },
+    "tolerances": {
+      "force_y_error_lbf": 1e-09,
+      "total_force_xz_abs_lbf": 1e-09,
+      "applied_moment_x_error_lbf_in": 1e-08,
+      "rigid_translation_rotation_relative_K_residual": 1e-10,
+      "constant_strain_relative_energy_error": 1e-10,
+      "local_stiffness_symmetry_relative_error": 1e-12
+    },
+    "passed": true,
+    "certified_error_bound": false
+  }
+}

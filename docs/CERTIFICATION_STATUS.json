@@ -1,0 +1,50 @@
+{
+  "status": "RESEARCH_SOLVER_NOT_A_POSTERIORI_CERTIFIED",
+  "certified_bound": false,
+  "scope": "three Hermite recovered-rotation cantilever formulations",
+  "gates": {
+    "rigid_affine_patch_proof": false,
+    "boundary_trace_admissibility": false,
+    "global_equilibrated_stress_field": false,
+    "validated_quadrature_enclosure": false,
+    "numerical_roundoff_and_solver_enclosure": false,
+    "rigorous_energy_or_qoi_bound": false,
+    "engineering_model_review": false
+  },
+  "benchmarks": {
+    "historical_quadratic_4x5x17_E2000000_discrepancy_pct": 0.4830138810550837,
+    "note": "reference displacement agreement is not an error enclosure",
+    "new_cubic_research_section_qoi_meshes": [
+      "3x3x5",
+      "3x3x9",
+      "3x3x17",
+      "3x3x33",
+      "5x5x9",
+      "5x5x17",
+      "5x5x33",
+      "5x5x65",
+      "5x5x129",
+      "7x7x17"
+    ],
+    "new_cubic_source_section_qois_are_certified": false
+  },
+  "preparation": {
+    "element_mode_and_load_checks": true,
+    "beam_reference_and_sampled_stress_diagnostics": true,
+    "offline_cubic_mesh_qoi_comparator": true,
+    "fail_closed_certification_checklist": true,
+    "equilibrated_stress_reconstruction_implemented": false,
+    "guaranteed_a_posteriori_hermite_bound_implemented": false,
+    "qualification": "Readiness to develop an estimator is not mathematical certification.",
+    "source_element_gauss_section_resultants": true,
+    "offline_section_qoi_comparator": true,
+    "numerical_internal_face_traction_jump_check": true,
+    "sampled_strong_form_volume_balance_check": true,
+    "constitutive_stress_proved_statically_admissible": false,
+    "independent_mechanics_of_materials_stress_cube_checks": true,
+    "cubic_polynomial_uniaxial_shear_bending_source_patch_checks": true,
+    "optional_solved_source_FE_work_energy_and_stress_audit": true,
+    "mechanics_benchmarks_are_exact_3d_solution_certificates": false,
+    "note_mechanics_benchmarks": "Book-aligned benchmark checks and sampled work-energy diagnostics do not reconstruct equilibrated stresses or bound discretization error."
+  }
+}

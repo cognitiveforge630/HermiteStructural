@@ -1,0 +1,213 @@
+{
+  "status": "RESEARCH_SECTION_QOI_COMPARISON_NOT_CERTIFIED",
+  "certified_error_bound": false,
+  "caveat": "The maximum discrepancies are at the available interior section locations, which vary by mesh; their changes are NOT a field-error norm, bound or proof of convergence. Beam theory is not the exact 3D reference.",
+  "cases": [
+    {
+      "result_file": "samples\\source_sections_20261026\\cubic_5x5x9_section_only.json",
+      "source_section_file": "samples\\source_sections_20261026\\cubic_5x5x9_section_only_source_sections.json",
+      "mesh": [
+        5,
+        5,
+        9
+      ],
+      "section_order": 4,
+      "positions": [
+        0.0
+      ],
+      "end_force_lbf": -12.8,
+      "weight_per_length_lbf_in": 0.5568,
+      "longitudinal_E_psi": 1100000.0,
+      "boundary_condition": "strong KKT face-displacement trace and fixed nodal rotations",
+      "beam_tip_uy_in": -0.1161490909090909,
+      "tip_uy_in": -0.11636553909460318,
+      "tip_vs_beam_pct": 0.1863537491496104,
+      "maximum_midspan_shear_vs_beam_pct": 15.060272003067922,
+      "maximum_midspan_moment_vs_beam_pct": 2.5935060256778755,
+      "sampled_stress_screen_performed": false,
+      "algebraic_relative_backward_error": 1.0629886459321144e-21
+    },
+    {
+      "result_file": "samples\\cubic_5x5x17.json",
+      "source_section_file": "samples\\cubic_5x5x17_source_sections.json",
+      "mesh": [
+        5,
+        5,
+        17
+      ],
+      "section_order": 4,
+      "positions": [
+        0.0
+      ],
+      "end_force_lbf": -12.8,
+      "weight_per_length_lbf_in": 0.5568,
+      "longitudinal_E_psi": 1100000.0,
+      "boundary_condition": "strong KKT face-displacement trace and fixed nodal rotations",
+      "beam_tip_uy_in": -0.1161490909090909,
+      "tip_uy_in": -0.11692830062091836,
+      "tip_vs_beam_pct": 0.6708702631494061,
+      "maximum_midspan_shear_vs_beam_pct": 2.0418640147130507,
+      "maximum_midspan_moment_vs_beam_pct": 1.672473130144644,
+      "sampled_stress_screen_performed": false,
+      "algebraic_relative_backward_error": 3.787277866346213e-19
+    },
+    {
+      "result_file": "samples\\cubic_5x5x33.json",
+      "source_section_file": "samples\\cubic_5x5x33_source_sections.json",
+      "mesh": [
+        5,
+        5,
+        33
+      ],
+      "section_order": 4,
+      "positions": [
+        0.0
+      ],
+      "end_force_lbf": -12.8,
+      "weight_per_length_lbf_in": 0.5568,
+      "longitudinal_E_psi": 1100000.0,
+      "boundary_condition": "strong KKT face-displacement trace and fixed nodal rotations",
+      "beam_tip_uy_in": -0.1161490909090909,
+      "tip_uy_in": -0.11747750709040933,
+      "tip_vs_beam_pct": 1.1437163829015018,
+      "maximum_midspan_shear_vs_beam_pct": 0.39048104714550963,
+      "maximum_midspan_moment_vs_beam_pct": 0.19346937300002284,
+      "sampled_stress_screen_performed": false,
+      "algebraic_relative_backward_error": 2.16457168585793e-16
+    },
+    {
+      "result_file": "samples\\cubic_5x5x65.json",
+      "source_section_file": "samples\\cubic_5x5x65_source_sections.json",
+      "mesh": [
+        5,
+        5,
+        65
+      ],
+      "section_order": 4,
+      "positions": [
+        0.0
+      ],
+      "end_force_lbf": -12.8,
+      "weight_per_length_lbf_in": 0.5568,
+      "longitudinal_E_psi": 1100000.0,
+      "boundary_condition": "strong KKT face-displacement trace and fixed nodal rotations",
+      "beam_tip_uy_in": -0.1161490909090909,
+      "tip_uy_in": -0.11793850158155086,
+      "tip_vs_beam_pct": 1.5406153061159362,
+      "maximum_midspan_shear_vs_beam_pct": 0.004482827902824939,
+      "maximum_midspan_moment_vs_beam_pct": 0.24569670224566675,
+      "sampled_stress_screen_performed": false,
+      "algebraic_relative_backward_error": 7.3647171342863e-17
+    },
+    {
+      "result_file": "samples\\cubic_5x5x129.json",
+      "source_section_file": "samples\\cubic_5x5x129_source_sections.json",
+      "mesh": [
+        5,
+        5,
+        129
+      ],
+      "section_order": 4,
+      "positions": [
+        0.0
+      ],
+      "end_force_lbf": -12.8,
+      "weight_per_length_lbf_in": 0.5568,
+      "longitudinal_E_psi": 1100000.0,
+      "boundary_condition": "strong KKT face-displacement trace and fixed nodal rotations",
+      "beam_tip_uy_in": -0.1161490909090909,
+      "tip_uy_in": -0.11820906712239988,
+      "tip_vs_beam_pct": 1.773562063366743,
+      "maximum_midspan_shear_vs_beam_pct": 0.002908149524672536,
+      "maximum_midspan_moment_vs_beam_pct": 0.3660848732298672,
+      "sampled_stress_screen_performed": false,
+      "algebraic_relative_backward_error": 4.1997652830715016e-17
+    }
+  ],
+  "pairs": [
+    {
+      "from_mesh": [
+        5,
+        5,
+        9
+      ],
+      "to_mesh": [
+        5,
+        5,
+        17
+      ],
+      "ratios_h_fine_over_coarse_xyz": [
+        1.0,
+        1.0,
+        0.5
+      ],
+      "uniform_refinement": false,
+      "tip_change_pct_of_fine": 0.4812876979540258,
+      "tip_beam_discrepancy_decreased": false,
+      "maximum_shear_beam_discrepancy_decreased": true
+    },
+    {
+      "from_mesh": [
+        5,
+        5,
+        17
+      ],
+      "to_mesh": [
+        5,
+        5,
+        33
+      ],
+      "ratios_h_fine_over_coarse_xyz": [
+        1.0,
+        1.0,
+        0.5
+      ],
+      "uniform_refinement": false,
+      "tip_change_pct_of_fine": 0.46749925419195987,
+      "tip_beam_discrepancy_decreased": false,
+      "maximum_shear_beam_discrepancy_decreased": true
+    },
+    {
+      "from_mesh": [
+        5,
+        5,
+        33
+      ],
+      "to_mesh": [
+        5,
+        5,
+        65
+      ],
+      "ratios_h_fine_over_coarse_xyz": [
+        1.0,
+        1.0,
+        0.5
+      ],
+      "uniform_refinement": false,
+      "tip_change_pct_of_fine": 0.39087701213735776,
+      "tip_beam_discrepancy_decreased": false,
+      "maximum_shear_beam_discrepancy_decreased": true
+    },
+    {
+      "from_mesh": [
+        5,
+        5,
+        65
+      ],
+      "to_mesh": [
+        5,
+        5,
+        129
+      ],
+      "ratios_h_fine_over_coarse_xyz": [
+        1.0,
+        1.0,
+        0.5
+      ],
+      "uniform_refinement": false,
+      "tip_change_pct_of_fine": 0.22888729894878618,
+      "tip_beam_discrepancy_decreased": false,
+      "maximum_shear_beam_discrepancy_decreased": true
+    }
+  ]
+}

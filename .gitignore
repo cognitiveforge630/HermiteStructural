@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.npy
+*.npz
+# Publish saved research results and the scripts that plot them.
+# Keep transient logs and other generated output excluded.
+outputs/*
+!outputs/*.json
+!outputs/*.csv
+!outputs/*.py
+!outputs/*.png
+!outputs/*.vtu
+hermite_result.json
+*.log
+.pytest_cache/
+.vscode/.ropeproject/

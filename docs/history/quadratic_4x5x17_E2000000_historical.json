@@ -1,0 +1,25 @@
+{
+  "formulation": "quadratic_rotation_hermite",
+  "research_not_certified": true,
+  "comparison_is_not_a_posteriori_bound": true,
+  "recovery": "quadratic",
+  "node_mesh": [
+    4,
+    5,
+    17
+  ],
+  "fem_tip_uy_in": -0.0641905589274956,
+  "awc_reference": {
+    "end_load_uy_in": -0.0216,
+    "self_weight_uy_in": -0.042282,
+    "total_uy_in": -0.063882,
+    "weight_per_length_lbf_in": 0.5568,
+    "total_weight_lbf": 66.816
+  },
+  "difference_vs_awc_pct": 0.4830138810550837,
+  "under_one_percent": true,
+  "total_y_force_lbf": -79.61599999999999,
+  "calibrated_modulus": false,
+  "longitudinal_E_psi": 2000000.0,
+  "boundary_condition": "strong KKT face-displacement trace and fixed nodal rotations"
+}

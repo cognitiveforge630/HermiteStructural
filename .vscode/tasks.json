@@ -1,0 +1,138 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "OOP: Hex64 element, facets, and two-cell assembly (no solve)",
+      "type": "shell",
+      "command": "python -m tools.demo_nodal_oop --order 3",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "OOP: Hex27 and Hex64 regression tests",
+      "type": "shell",
+      "command": "python -m unittest tests.test_nodal_oop tests.test_p_order_study -v",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "OOP: Hex64 mechanical verification (no full solve)",
+      "type": "shell",
+      "command": "python -m tools.p_order_study --mode verify --order 3",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Check: Unit tests",
+      "type": "shell",
+      "command": "python -m unittest discover -s tests -v",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Check: Element modes",
+      "type": "shell",
+      "command": "python -m tests.checks.element_modes",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Check: Source snapshot",
+      "type": "shell",
+      "command": "python -m tests.checks.source_provenance",
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run: Linear Hermite",
+      "type": "shell",
+      "command": "python -m tutorials.linear --nx 3 --ny 3 --nz 5",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run: Quadratic Hermite",
+      "type": "shell",
+      "command": "python -m tutorials.quadratic --nx 3 --ny 3 --nz 5",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run: Cubic Hermite",
+      "type": "shell",
+      "command": "python -m tutorials.cubic --nx 3 --ny 3 --nz 5",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "View: Linear Hermite (small mesh)",
+      "type": "shell",
+      "command": "python -m tutorials.linear --nx 3 --ny 3 --nz 5 --view --export-vtu",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Export: Linear Hermite (small mesh)",
+      "type": "shell",
+      "command": "python -m tutorials.linear --nx 3 --ny 3 --nz 5 --export-vtu",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "View: Quadratic Hermite (small mesh)",
+      "type": "shell",
+      "command": "python -m tutorials.quadratic --nx 3 --ny 3 --nz 5 --view --export-vtu",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Export: Quadratic Hermite (small mesh)",
+      "type": "shell",
+      "command": "python -m tutorials.quadratic --nx 3 --ny 3 --nz 5 --export-vtu",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "View: Cubic Hermite (small mesh)",
+      "type": "shell",
+      "command": "python -m tutorials.cubic --nx 3 --ny 3 --nz 5 --view --export-vtu",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Export: Cubic Hermite (small mesh)",
+      "type": "shell",
+      "command": "python -m tutorials.cubic --nx 3 --ny 3 --nz 5 --export-vtu",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "View: Cubic Redwood stress (3x3x9)",
+      "type": "shell",
+      "command": "python -m tutorials.cubic --nx 3 --ny 3 --nz 9 --subdivisions 3 --field \"Sigma zz (psi)\" --view --export-vtu",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "View: Saved cubic stress comparison",
+      "type": "shell",
+      "command": "python -m core.visualization.pyvista_viewer samples/cubic_3x3x9.vtu --field \"Cubic minus beam sigma zz (psi)\"",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "View: Saved cubic tau_yz comparison (instant; no solve)",
+      "type": "shell",
+      "command": "python -m core.visualization.shear_comparison samples/cubic_3x5x25_shear_comparison.vtu --full-screen",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run: Cubic tau_yz side-by-side (3x5x25)",
+      "type": "shell",
+      "command": "python -m tutorials.cubic --nx 3 --ny 5 --nz 25 --shear-comparison --full-screen --edges --out outputs/cubic_dual_shear.json",
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}

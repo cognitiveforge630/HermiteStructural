@@ -1,0 +1,11 @@
+{
+  "status": "RECORDED_RESEARCH_SUMMARY_NOT_RAW_SOLVE_OUTPUT",
+  "source": "docs/HIGHER_NODE_HEX27_HEX64_STUDY_20261027.md and the included README table",
+  "caveat": "The 3x5x25 raw solver archives were NOT included in this distribution. These are saved summary values; run the documented solves for independent reproduction.",
+  "cases": [
+    {"order": 2, "mesh": [3,3,5], "tip_pct": 1.3648, "section_shear_pct": 72.61185, "section_moment_pct": 7.95556},
+    {"order": 3, "mesh": [3,3,5], "tip_pct": 1.8750, "section_shear_pct": 2.53271, "section_moment_pct": 0.40601},
+    {"order": 2, "mesh": [3,5,25], "tip_pct": 2.0021, "section_shear_pct": 2.1811, "section_moment_pct": 0.16016},
+    {"order": 3, "mesh": [3,5,25], "tip_pct": 2.0244, "section_shear_pct": 0.01313, "section_moment_pct": 0.000328}
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "status": "RESEARCH_SECTIONAL_DIAGNOSTIC_NOT_A_POSTERIORI",
+  "stress_evaluated_from": "D @ source_element_B @ source_element_U",
+  "visualization_subdivisions_affect_results": false,
+  "cross_section_quadrature_order": 4,
+  "positions_parent_zeta": [
+    -0.9,
+    0.9
+  ],
+  "sections": [
+    {
+      "z_in": 1.4999999999999996,
+      "axial_parent_zeta": -0.9,
+      "section_area_in2": 31.999999999999975,
+      "FE_shear_x_lbf": -1.7482359310205808e-11,
+      "FE_shear_y_lbf": -3.8448291749682095,
+      "FE_axial_force_lbf": -2.908322471739666e-10,
+      "FE_bending_moment_x_lbf_in": 4966.6174533514,
+      "beam_shear_y_lbf": -78.7808,
+      "beam_bending_moment_x_lbf_in": 5426.162399999999,
+      "shear_y_reference_difference_pct": 95.11958602226912,
+      "moment_x_reference_difference_pct": 8.469059950151859
+    },
+    {
+      "z_in": 28.5,
+      "axial_parent_zeta": 0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": -2.403336696321645e-10,
+      "FE_shear_y_lbf": -49.84976278727812,
+      "FE_axial_force_lbf": -5.278657511098572e-10,
+      "FE_bending_moment_x_lbf_in": 3537.4950877620804,
+      "beam_shear_y_lbf": -63.74719999999999,
+      "beam_bending_moment_x_lbf_in": 3502.0343999999996,
+      "shear_y_reference_difference_pct": 21.800859038078343,
+      "moment_x_reference_difference_pct": 1.0125739416517683
+    },
+    {
+      "z_in": 31.5,
+      "axial_parent_zeta": -0.9,
+      "section_area_in2": 31.999999999999975,
+      "FE_shear_x_lbf": -2.5566215811068105e-10,
+      "FE_shear_y_lbf": -53.09867330803506,
+      "FE_axial_force_lbf": -5.57786705712715e-10,
+      "FE_bending_moment_x_lbf_in": 3404.9796960214876,
+      "beam_shear_y_lbf": -62.07679999999999,
+      "beam_bending_moment_x_lbf_in": 3313.2983999999997,
+      "shear_y_reference_difference_pct": 14.46293412670262,
+      "moment_x_reference_difference_pct": 2.7670703013494933
+    },
+    {
+      "z_in": 58.5,
+      "axial_parent_zeta": 0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": -3.1107097453464405e-10,
+      "FE_shear_y_lbf": -62.02835972571163,
+      "FE_axial_force_lbf": -8.39593283785689e-10,
+      "FE_bending_moment_x_lbf_in": 2128.72769370575,
+      "beam_shear_y_lbf": -47.0432,
+      "beam_bending_moment_x_lbf_in": 1840.1784,
+      "shear_y_reference_difference_pct": 31.854039958403412,
+      "moment_x_reference_difference_pct": 15.680506504464455
+    },
+    {
+      "z_in": 61.49999999999999,
+      "axial_parent_zeta": -0.9,
+      "section_area_in2": 31.999999999999975,
+      "FE_shear_x_lbf": -2.9428735837111475e-10,
+      "FE_shear_y_lbf": -57.00812032537477,
+      "FE_axial_force_lbf": -9.057625760533483e-10,
+      "FE_bending_moment_x_lbf_in": 1982.0816683194435,
+      "beam_shear_y_lbf": -45.3728,
+      "beam_bending_moment_x_lbf_in": 1701.5544000000004,
+      "shear_y_reference_difference_pct": 25.64382256632778,
+      "moment_x_reference_difference_pct": 16.486529512041635
+    },
+    {
+      "z_in": 88.5,
+      "axial_parent_zeta": 0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": -3.621513089413497e-10,
+      "FE_shear_y_lbf": -38.31584874222068,
+      "FE_axial_force_lbf": -1.1236487296173436e-09,
+      "FE_bending_moment_x_lbf_in": 737.2789355796363,
+      "beam_shear_y_lbf": -30.339199999999998,
+      "beam_bending_moment_x_lbf_in": 679.4424,
+      "shear_y_reference_difference_pct": 26.29155924421436,
+      "moment_x_reference_difference_pct": 8.512353008825507
+    },
+    {
+      "z_in": 91.5,
+      "axial_parent_zeta": -0.9,
+      "section_area_in2": 31.999999999999975,
+      "FE_shear_x_lbf": -3.653380931112338e-10,
+      "FE_shear_y_lbf": -34.318599070490315,
+      "FE_axial_force_lbf": -1.1246807929410352e-09,
+      "FE_bending_moment_x_lbf_in": 657.4614800471124,
+      "beam_shear_y_lbf": -28.668799999999997,
+      "beam_bending_moment_x_lbf_in": 590.9304,
+      "shear_y_reference_difference_pct": 19.70713483121134,
+      "moment_x_reference_difference_pct": 11.25869984808913
+    },
+    {
+      "z_in": 118.5,
+      "axial_parent_zeta": 0.9,
+      "section_area_in2": 31.99999999999998,
+      "FE_shear_x_lbf": -3.7376492179053145e-10,
+      "FE_shear_y_lbf": -4.617236599475946,
+      "FE_axial_force_lbf": -1.1275447242553582e-09,
+      "FE_bending_moment_x_lbf_in": -497.90393587058117,
+      "beam_shear_y_lbf": -13.635200000000001,
+      "beam_bending_moment_x_lbf_in": 19.826400000000003,
+      "shear_y_reference_difference_pct": 66.1373753265376,
+      "moment_x_reference_difference_pct": 2611.3179188888603
+    }
+  ],
+  "max_midspan_shear_y_difference_pct": 31.854039958403412,
+  "max_midspan_moment_x_difference_pct": 16.486529512041635,
+  "certified_error_bound": false,
+  "limitations": "Constitutive FE stress is not statically admissible by construction; a beam-theory cross-section check is not a 3D error estimator."
+}

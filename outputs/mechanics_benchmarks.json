@@ -1,0 +1,101 @@
+{
+  "status": "PASS_RESEARCH_BENCHMARKS_NOT_CERTIFIED",
+  "reference": "Mechanics of Materials, 6th edition (Beer, Johnston, DeWolf, Mazurek), chapters 1, 4-6, 9, 11",
+  "units": "in, lbf, psi, lbf*in",
+  "checks": {
+    "source_polynomial_modes": true,
+    "beam_superposition": true,
+    "clamped_boundary_reference": true,
+    "free_end_reference_moment": true,
+    "stress_cube_rotation": true,
+    "constant_stress_cube_equilibrium": true,
+    "engineering_shear_energy_convention": true,
+    "beam_stress_sign_and_surface_shear": true,
+    "beam_energy_quadrature_diagnostic": true
+  },
+  "observations": {
+    "patch_modes": {
+      "status": "PRESCRIBED_SOURCE_PATCH_DIAGNOSTIC_NOT_CERTIFIED",
+      "formulation": "CubicRotationHex8",
+      "sampled_source_elements": [
+        0,
+        8,
+        15
+      ],
+      "sampled_parent_points": [
+        [
+          -0.52,
+          0.37,
+          -0.23
+        ],
+        [
+          0.27,
+          -0.41,
+          0.63
+        ]
+      ],
+      "modes": {
+        "tension": {
+          "maximum_absolute_stress_difference_psi": 9.769962616701378e-14,
+          "maximum_relative_stress_difference": 3.8616453030440225e-15,
+          "stress_field_exactly_reproduced_at_test_points": true
+        },
+        "compression": {
+          "maximum_absolute_stress_difference_psi": 9.769962616701378e-14,
+          "maximum_relative_stress_difference": 3.8616453030440225e-15,
+          "stress_field_exactly_reproduced_at_test_points": true
+        },
+        "shear_yz": {
+          "maximum_absolute_stress_difference_psi": 9.189050348428444e-15,
+          "maximum_relative_stress_difference": 3.099696525022245e-15,
+          "stress_field_exactly_reproduced_at_test_points": true
+        },
+        "pure_bending": {
+          "maximum_absolute_stress_difference_psi": 7.031875082219585e-14,
+          "maximum_relative_stress_difference": 3.1867466157072357e-14,
+          "stress_field_exactly_reproduced_at_test_points": true
+        }
+      },
+      "certified_error_bound": false,
+      "caveat": "Prescribed polynomial displacement modes, not a global solved boundary-value or a posteriori verification"
+    },
+    "beam_theory": {
+      "tip_uy_in": -0.1161490909090909,
+      "clamp_displacement_in": -0.0,
+      "clamp_slope": -0.0,
+      "free_end_shear_lbf": -12.8,
+      "free_end_moment_lbf_in": 0.0,
+      "superposition_max_absolute_residual": 4.547473508864641e-13,
+      "one_dimensional_bending_energy_lbf_in": 2.2626771316363636,
+      "one_dimensional_work_minus_2_energy_lbf_in": 0.0,
+      "sampled_bending_stress_psi": [
+        -41.489999999999995,
+        0.0,
+        41.489999999999995
+      ],
+      "sampled_parabolic_shear_psi": [
+        -0.0,
+        -2.166,
+        -0.0
+      ]
+    },
+    "stress_cube": {
+      "rotation_tensor_max_residual_psi": 1.7763568394002505e-15,
+      "principal_eigenvalue_rotation_max_residual_psi": 3.552713678800501e-15,
+      "traction_rotation_max_residual_psi": 3.552713678800501e-15,
+      "tensor_vs_voigt_energy_density_residual_psi": 0.0,
+      "constant_stress_cube_force_resultant_lbf": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "constant_stress_cube_moment_resultant_lbf_in": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "certified_error_bound": false,
+  "limitations": "Prescribed polynomial stress patches and elementary 1D reference checks; not independent 3D solved-model validation, boundary traction admissibility, or a rigorous a posteriori numerical error bound."
+}
