@@ -91,21 +91,21 @@ M_{\max} = FL + \frac{qL^2}{2}
 = 5544.96\ \mathrm{lbf\,in}.
 $$
 
-$$
+```math
 \sigma_{\mathrm{bend,max}} = \frac{M_{\max}(h/2)}{I_x}
 = \underbrace{\frac{1536(4)}{170.666667}}_{36.00\ \mathrm{psi\ (end\ load)}}
 + \underbrace{\frac{4008.96(4)}{170.666667}}_{93.96\ \mathrm{psi\ (gravity)}}
 = \boxed{129.96\ \mathrm{psi}}.
-$$
+```
 
 **Classical Euler–Bernoulli free-end displacement (including gravity):**
 
-$$
+```math
 \delta_y(L) = -\frac{FL^3}{3E_z I_x}
 - \frac{qL^4}{8E_z I_x}
 = -0.039272727 - 0.076876364
 = \boxed{-0.116149091\ \mathrm{in}}.
-$$
+```
 
 The two terms are, respectively, the downward end traction resultant and
 the downward distributed self-weight. No adjustment or calibration of $E_z$
