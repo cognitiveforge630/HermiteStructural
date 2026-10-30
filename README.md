@@ -370,10 +370,12 @@ material, loading, and section-sampling convention.
 
 | Element type | Source vertex grid | Physical cells | Global nodes | Tip vs beam (%) | Max middle-half section shear vs beam (%) | Max middle-half section moment vs beam (%) |
 |:--|:--|--:|--:|--:|--:|--:|
-| Quadratic Lagrange Hex27 | 3×3×5 | 16 | 225 | 1.3648 | 72.61185 | 7.95556 |
-| Cubic Lagrange Hex64 | 3×3×5 | 16 | 637 | 1.8750 | 2.53271 | 0.40601 |
-| Quadratic Lagrange Hex27 | 3×5×25 | 192 | 2,205 | 2.0021 | 2.1811 | 0.16016 |
-| Cubic Lagrange Hex64 | 3×5×25 | 192 | 6,643 | 2.0244 | **0.01313** | **0.000328** |
+| Quadratic Lagrange Hex27 | 3×3×5 | 16 | 225 | +1.3648 | +72.61185 | +7.95556 |
+| Cubic Lagrange Hex64 | 3×3×5 | 16 | 637 | +1.8750 | −2.53271 | −0.40601 |
+| Quadratic Lagrange Hex27 | 3×5×25 | 192 | 2,205 | ±2.0021* | ±2.1811* | ±0.16016* |
+| Cubic Lagrange Hex64 | 3×5×25 | 192 | 6,643 | ±2.0244* | **±0.01313*** | **±0.000328*** |
+
+**Sign convention:** Signed differences compare FEM magnitudes against the corresponding beam-reference magnitudes: `100 × (|FEM| − |beam|) / |beam|`. **+** means higher FEM magnitude; **−** means lower. Section signs refer to the locations of the respective maximum middle-half discrepancies. **±*** means the original unsigned magnitude is preserved, but its direction cannot be established from the archived summary alone; the 3×5×25 raw solve/section records are not included in this repository. No sign is assumed.
 
 On the denser 192-cell mesh, Hex64 gives the smaller section-shear and
 section-moment discrepancies; Hex27 is slightly closer on tip displacement.
