@@ -162,8 +162,8 @@ def show_shear_grid(grid, *, title="Cubic recovered-rotation Hermite",
                    clim=clim, show_edges=show_edges, edge_color='#273544',
                    line_width=0.25, lighting=False,
                    scalar_bar_args={'title': 'Signed shear tau_yz (psi)',
-                                    'title_font_size': 11, 'label_font_size': 10,
-                                    'fmt': '%.2f'})
+                                    'title_font_size': 10, 'label_font_size': 10,
+                                    'color': 'white', 'fmt': '%.2f'})
         p.add_text(label, position='upper_left', font_size=11, color='white')
         p.add_axes()
         p.camera_position = camera
