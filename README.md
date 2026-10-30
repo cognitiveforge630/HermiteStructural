@@ -368,7 +368,7 @@ interpolation nodes, including the extra nodes within Hex27/Hex64 elements.
 Both conventional families use translation-only clamps and the same
 material, loading, and section-sampling convention.
 
-| Element type | Source vertex grid | Physical cells | Global nodes | Tip vs beam (%) | Max middle-half section shear vs beam (%) | Max middle-half section moment vs beam (%) |
+| Element type | Source vertex grid | Physical cells | Global nodes | Signed tip vs beam (%) | Max middle-half section shear vs beam (%) | Max middle-half section moment vs beam (%) |
 |:--|:--|--:|--:|--:|--:|--:|
 | Quadratic Lagrange Hex27 | 3×3×5 | 16 | 225 | +1.3648 | +72.61185 | +7.95556 |
 | Cubic Lagrange Hex64 | 3×3×5 | 16 | 637 | +1.8750 | −2.53271 | −0.40601 |
