@@ -774,15 +774,14 @@ unsampled maxima or other failure modes cannot exceed limits.
 **3×3×5 nodes (16 source Hex8 cells)**, same loads and revised grade-aligned
 modulus for every row:
 
-| Hermite formulation | Tip displacement | Difference from beam theory |
+| Hermite formulation | Tip displacement | Signed displacement-magnitude difference from beam theory |
 |:--------------------|-----------------:|----------------------------:|
-| Linear | −0.005386 in | 95.36% |
-| Quadratic | −0.094852 in | 18.34% |
-| Cubic | −0.114796 in | 1.16% |
+| Linear | −0.005386 in | −95.36% |
+| Quadratic | −0.094852 in | −18.34% |
+| Cubic | −0.114796 in | −1.16% |
 
 Beam-theory reference: **−0.116149 in**. The linear formulation is still far
-too stiff, while cubic is better on this mesh. The % values quantify **beam
-agreement only**; they are not error certificates.
+too stiff, while cubic is better on this mesh. The signed percentages compare displacement **magnitudes**: `100 × (|FEM| − |beam|) / |beam|`; negative means less downward deflection than beam theory. They quantify **beam agreement only**; they are not error certificates.
 
 ```powershell
 python -m tutorials.linear --nx 3 --ny 3 --nz 5
@@ -795,13 +794,13 @@ python -m tools.compare_results
 
 The two cubic mesh studies are summarized below:
 
-| Cubic mesh | Tip displacement discrepancy | Interior longitudinal stress discrepancy |
+| Cubic mesh | Signed tip displacement-magnitude difference | Interior longitudinal stress relative L² discrepancy (unsigned) |
 |:--|--:|--:|
-| 3×3×5 | 1.165% | 9.12% |
-| 3×3×9 | 0.465% | 2.16% |
+| 3×3×5 | −1.165% | 9.12% |
+| 3×3×9 | −0.465% | 2.16% |
 
-The tip figures compare FE tip deflection with the same analytical beam
-reference. The stress figures are **relative L² differences** between sampled
+The signed tip figures compare FE deflection magnitudes with the same analytical beam
+reference (negative means less downward deflection). The stress figures remain **unsigned relative L² differences** between sampled
 Hermite longitudinal bending stress `σzz` and classical beam theory over
 the central half of the beam. The 3×3×5 diagnostic used 2 visualization
 subdivisions; the 3×3×9 diagnostic used 3, so the figures also reflect
