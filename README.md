@@ -201,6 +201,25 @@ memory warning are in **[5×5×129 local-stress workflow](docs/CUBIC_129_LOCAL_S
 The expensive full-density solve **has not been rerun here**, and a local 1%
 stress accuracy claim is not established by existing results.
 
+> [!NOTE]
+> ### Element Aspect Ratios, Polynomial Order, and Computational Efficiency
+>
+> **The finite elements illustrated in this repository do not necessarily have a 1:1:1 aspect ratio, nor is such a ratio a universal requirement for accurate finite-element analysis.** The meshes shown here deliberately employ rectangular hexahedral elements whose dimensions may differ along the three coordinate axes.
+>
+> In finite-element analysis, accuracy is governed by more than element size alone. Element geometry, aspect ratio, interpolation order, solution regularity, numerical integration, and the nature of the underlying stress and displacement fields all influence the quality of an approximation. Elements need not be perfectly cubic to produce meaningful results. In suitable circumstances, elongated elements aligned with the geometry and dominant variation of the solution can provide an effective and computationally economical discretization.
+>
+> **Conventional first-degree Hex8 elements remain mathematically valid and capable finite elements.** With appropriate mesh refinement, correctly applied boundary conditions, and adequate element quality, sufficiently dense meshes of these linear elements can approximate the same underlying elasticity problem. However, their lower polynomial interpolation order may require substantially more elements and degrees of freedom to achieve accuracy comparable to higher-order formulations, particularly in bending-dominated problems. The resulting computational expense can be considerable.
+>
+> Accordingly, **the principal demonstrations in this repository emphasize higher-order interpolation and recovered-rotation Hermite formulations**, exploring how richer approximations can represent structural behavior using comparatively modest element counts. First-degree Hex8 elements are supported for reference, visualization, and comparative studies, but are not the principal production-scale demonstration approach presented here.
+>
+> This choice reflects an intentional balance between mathematical fidelity, computational efficiency, and accessibility. The objective is not to produce the greatest possible number of elements, nor to insist upon uniformly proportioned elements, but rather to achieve sufficiently accurate and reproducible results for the stated educational and research objectives without unnecessary computational expenditure.
+>
+> **An important qualification:** favorable agreement with an analytical beam reference does not, by itself, demonstrate mesh convergence or establish the accuracy of local three-dimensional stresses. Element quality and aspect-ratio sensitivity must be evaluated for the formulation, loading, and quantities being studied. Results are considered satisfactory only for those specific measures whose stated tolerances have actually been verified; the repository does not claim universal stress accuracy or structural-design certification.
+>
+> The deeper mathematics of optimal element geometry, anisotropic mesh adaptation, directional refinement, interpolation-error estimates, and rigorous aspect-ratio selection constitutes a substantial topic in its own right. **A comprehensive treatment is intentionally reserved for a future, more specialized repository.**
+>
+> For the present tutorial, the guiding principle is straightforward: **use the mathematical richness of the element formulation and an appropriately designed mesh to obtain useful accuracy at a reasonable computational cost, while remaining explicit about what has—and has not—been validated.**
+
 ## Mesh previews: Hex8 / Hermite geometry / Hex27 / Hex64
 
 Use a single preview command for **all four mesh families**, before solving. The physical cell wireframe is the default; red interpolation-node markers (`--nodes`) and orange Gaussian-point markers (`--gauss-points`) are optional.
