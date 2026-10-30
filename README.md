@@ -598,20 +598,20 @@ The 3×3×9 → 5×5×129 result is approximately **7,072 times smaller** for th
 specific shear-resultant discrepancy. The table also records displacement
 and moment so that the improvement can be assessed alongside other quantities.
 
-| Element formulation | Node mesh | Tip vs beam (%) | Tip ± (%) | Max interior section shear vs beam (%) | Shear ± (%) | Max interior section moment vs beam (%) | Moment ± (%) |
+| Element formulation | Node mesh | Tip vs beam (%) | Tip ± (%) | Max interior section shear vs beam, signed (%) | Shear ± (%) | Max interior section moment vs beam (%) | Moment ± (%) |
 |:--|:--|--:|--:|--:|--:|--:|--:|
-| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×5 | 1.165 | −1.165 | 18.84 | +18.84 | 9.35 | +9.35 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×9 | 0.465 | −0.465 | 20.57 | −20.57 | 3.23 | −3.23 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×17 | 0.408 | +0.408 | 8.05 | −8.05 | 2.30 | −2.30 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×33 | 1.108 | +1.108 | 6.12 | −6.12 | 0.32 | −0.32 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×9 | **0.186** | +0.186 | 15.06 | −15.06 | 2.59 | −2.59 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×17 | 0.671 | +0.671 | 2.04 | −2.04 | 1.67 | −1.67 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×33 | 1.144 | +1.144 | 0.39 | +0.39 | 0.19 | −0.19 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×65 | 1.541 | +1.541 | 0.0045 | +0.0045 | 0.25 | +0.25 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×129 | 1.774 | +1.774 | **0.0029** | +0.0029 | 0.37 | +0.37 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 7×7×17 | 1.063 | +1.063 | 2.08 | −2.08 | 1.00 | −1.00 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×5 | 1.165 | −1.165 | +18.84 | +18.84 | 9.35 | +9.35 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×9 | 0.465 | −0.465 | −20.57 | −20.57 | 3.23 | −3.23 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×17 | 0.408 | +0.408 | −8.05 | −8.05 | 2.30 | −2.30 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×33 | 1.108 | +1.108 | −6.12 | −6.12 | 0.32 | −0.32 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×9 | **0.186** | +0.186 | −15.06 | −15.06 | 2.59 | −2.59 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×17 | 0.671 | +0.671 | −2.04 | −2.04 | 1.67 | −1.67 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×33 | 1.144 | +1.144 | +0.39 | +0.39 | 0.19 | −0.19 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×65 | 1.541 | +1.541 | +0.0045 | +0.0045 | 0.25 | +0.25 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×129 | 1.774 | +1.774 | +**0.0029** | +0.0029 | 0.37 | +0.37 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 7×7×17 | 1.063 | +1.063 | −2.08 | −2.08 | 1.00 | −1.00 |
 
-**Signed comparison (±):** Each signed value compares the FEM **magnitude** with the beam-reference magnitude: `100 × (|FEM| − |beam|) / |beam|`. **+** means the FEM magnitude is higher; **−** means it is lower. The adjacent unsigned columns retain the original absolute differences. For shear and moment, the sign is evaluated at the interior section where that row's respective reported maximum discrepancy occurs (within the central half-span, 30–90 in); the two locations can differ. These are integrated section resultants, not pointwise stress errors.
+**Signed comparison (±):** Each signed value compares the FEM **magnitude** with the beam-reference magnitude: `100 × (|FEM| − |beam|) / |beam|`. **+** means the FEM magnitude is higher; **−** means it is lower. The shear column now displays the signed difference directly; its adjacent Shear ± column retains the same signed value for compatibility. The tip and moment unsigned columns retain their original absolute differences. For shear and moment, the sign is evaluated at the interior section where that row's respective reported maximum discrepancy occurs (within the central half-span, 30–90 in); the two locations can differ. These are integrated section resultants, not pointwise stress errors.
 
 For the higher-node cubic element, see the **Hex64 rows** in the
 [Hex27/Hex64 results table above](#new-conventional-hex27-and-hex64-comparison-27-october-2026).
