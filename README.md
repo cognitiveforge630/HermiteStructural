@@ -1,5 +1,7 @@
 # HermiteStructural_CubicHigherOrder_OOP
 
+![Site-wide views (GoatCounter)](https://cognitiveforge.goatcounter.com/counter/TOTAL.svg)
+
 Experimental recovered-rotation Hermite elements and conventional nodal Hex27/Hex64 finite elements. **Not certified structural-analysis software.** The Redwood benchmark includes self-weight and consistently integrated end-face traction; its one-dimensional beam reference is not the exact 3D stress solution. This README provides verified commands and distinct experiment records.
 
 > **MANDATORY STRESS-SAMPLING POLICY — NEVER USE CENTROIDS FOR STRESS.**
