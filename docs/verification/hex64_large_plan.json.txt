@@ -1,0 +1,36 @@
+{
+  "family": "Hex64_tensor_Lagrange_C0",
+  "polynomial_order": 3,
+  "original_Hermite_vertex_mesh": [
+    3,
+    5,
+    25
+  ],
+  "physical_element_divisions": [
+    2,
+    4,
+    24
+  ],
+  "continuity": "C0",
+  "DOFs_per_node": 3,
+  "interpolation_nodes_per_element": 64,
+  "nodes_per_element_face": 16,
+  "actual_global_nodes_per_direction": [
+    7,
+    13,
+    73
+  ],
+  "global_nodes": 6643,
+  "free_and_fixed_translation_DOFs": 19929,
+  "local_element_DOFs": 192,
+  "total_dense_COO_contributions_before_coalescing": 7077888,
+  "estimated_COO_triplets_MiB": 162.0,
+  "note_memory": "Conceptual unbatched COO estimate; OOP implementation flushes batches of 8 elements into CSR. Sparse factorization may still use much more RAM.",
+  "assembly_batch_elements": 8,
+  "gauss_order_per_axis": 4,
+  "constitutive_model": "same orthotropic Redwood reference parameters as the Hermite solver",
+  "clamp": "all three translational DOFs fixed at z=0; no rotational DOFs",
+  "loading": "uniform end traction on z=L; consistently integrated body self-weight",
+  "certified_error_bound": false
+}
+Plan only: no stiffness assembly or linear solve performed.

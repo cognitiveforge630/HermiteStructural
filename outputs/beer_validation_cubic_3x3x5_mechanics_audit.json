@@ -1,0 +1,284 @@
+{
+  "status": "SOLVED_MECHANICS_DIAGNOSTIC_NOT_CERTIFIED",
+  "material_model": "3D orthotropic linear Cauchy elasticity",
+  "stress_order": "xx, yy, zz, xy, yz, xz",
+  "reference_model": "1D Euler-Bernoulli plus elementary parabolic shear profile",
+  "discrete_external_work_lbf_in": 4.4480880486868175,
+  "source_FE_strain_energy_lbf_in": 2.2240440243649844,
+  "clapeyron_relative_residual": 9.701080524930606e-12,
+  "beam_reference_bending_energy_lbf_in": 2.2626771316363636,
+  "section_samples": [
+    {
+      "fraction_of_length": 0.25,
+      "z_in": 30.0,
+      "source_element_for_displacement": 13,
+      "FE_centerline_uy_in": -0.010811641480625248,
+      "beam_centerline_uy_in": -0.011483053977272725,
+      "centerline_uy_difference_in": 0.0006714124966474763,
+      "beam_shear_y_lbf": -62.91199999999999,
+      "beam_moment_x_lbf_in": 3407.04,
+      "local_stress_samples": [
+        {
+          "y_in": -2.0,
+          "source_element": 9,
+          "FE_stress_voigt_psi": [
+            -1.4664847659894804,
+            -0.5449600951988054,
+            -40.33252396163963,
+            -3.946069342160755e-12,
+            -1.5373946969325372,
+            -6.732260320495294e-12
+          ],
+          "FE_principal_stress_psi": [
+            -0.4856434705339544,
+            -1.4664847659894804,
+            -40.39184058630449
+          ],
+          "FE_traction_on_plus_z_face_psi": [
+            -6.732260320495294e-12,
+            -1.5373946969325372,
+            -40.33252396163963
+          ],
+          "beam_sigma_zz_psi": -39.92625,
+          "beam_tau_yz_psi": -2.21175,
+          "sigma_zz_difference_psi": -0.40627396163962715,
+          "tau_yz_difference_psi": 0.6743553030674627
+        },
+        {
+          "y_in": 0.0,
+          "source_element": 13,
+          "FE_stress_voigt_psi": [
+            -3.06873063092891e-12,
+            -2.4498719762960857e-12,
+            -1.9122580357521252e-11,
+            1.299533461531309e-13,
+            -1.9313906810394943,
+            -8.402019646505117e-12
+          ],
+          "FE_principal_stress_psi": [
+            1.9313906810287083,
+            -3.0687306309300404e-12,
+            -1.9313906810502801
+          ],
+          "FE_traction_on_plus_z_face_psi": [
+            -8.402019646505117e-12,
+            -1.9313906810394943,
+            -1.9122580357521252e-11
+          ],
+          "beam_sigma_zz_psi": 0.0,
+          "beam_tau_yz_psi": -2.949,
+          "sigma_zz_difference_psi": -1.9122580357521252e-11,
+          "tau_yz_difference_psi": 1.0176093189605055
+        },
+        {
+          "y_in": 2.0,
+          "source_element": 13,
+          "FE_stress_voigt_psi": [
+            1.466484765985814,
+            0.5449600951955356,
+            40.332523961603485,
+            3.3784449291525306e-12,
+            -1.537394696933347,
+            -8.020629656146345e-12
+          ],
+          "FE_principal_stress_psi": [
+            40.39184058626846,
+            1.466484765985814,
+            0.4856434705305712
+          ],
+          "FE_traction_on_plus_z_face_psi": [
+            -8.020629656146345e-12,
+            -1.537394696933347,
+            40.332523961603485
+          ],
+          "beam_sigma_zz_psi": 39.92625,
+          "beam_tau_yz_psi": -2.21175,
+          "sigma_zz_difference_psi": 0.40627396160348184,
+          "tau_yz_difference_psi": 0.6743553030666529
+        }
+      ]
+    },
+    {
+      "fraction_of_length": 0.5,
+      "z_in": 60.0,
+      "source_element_for_displacement": 14,
+      "FE_centerline_uy_in": -0.038312560072817366,
+      "beam_centerline_uy_in": -0.039499772727272724,
+      "centerline_uy_difference_in": 0.001187212654455358,
+      "beam_shear_y_lbf": -46.208,
+      "beam_moment_x_lbf_in": 1770.2399999999998,
+      "local_stress_samples": [
+        {
+          "y_in": -2.0,
+          "source_element": 10,
+          "FE_stress_voigt_psi": [
+            -1.1800867660841927,
+            -0.980949614696262,
+            -24.599760922797884,
+            -2.973764224691117e-12,
+            -1.8614054209998137,
+            -8.338022373443256e-12
+          ],
+          "FE_principal_stress_psi": [
+            -0.8351517136730404,
+            -1.1800867660841927,
+            -24.745558823821113
+          ],
+          "FE_traction_on_plus_z_face_psi": [
+            -8.338022373443256e-12,
+            -1.8614054209998137,
+            -24.599760922797884
+          ],
+          "beam_sigma_zz_psi": -20.744999999999997,
+          "beam_tau_yz_psi": -1.6244999999999998,
+          "sigma_zz_difference_psi": -3.8547609227978867,
+          "tau_yz_difference_psi": -0.23690542099981382
+        },
+        {
+          "y_in": 0.0,
+          "source_element": 14,
+          "FE_stress_voigt_psi": [
+            -2.6396533971886384e-12,
+            -1.7900175500706594e-12,
+            -2.92043410236596e-11,
+            3.167539231830523e-13,
+            -1.923067132733442,
+            -1.1176761415601841e-11
+          ],
+          "FE_principal_stress_psi": [
+            1.9230671327179436,
+            -2.6396533971923203e-12,
+            -1.9230671327489395
+          ],
+          "FE_traction_on_plus_z_face_psi": [
+            -1.1176761415601841e-11,
+            -1.923067132733442,
+            -2.92043410236596e-11
+          ],
+          "beam_sigma_zz_psi": 0.0,
+          "beam_tau_yz_psi": -2.166,
+          "sigma_zz_difference_psi": -2.92043410236596e-11,
+          "tau_yz_difference_psi": 0.24293286726655783
+        },
+        {
+          "y_in": 2.0,
+          "source_element": 14,
+          "FE_stress_voigt_psi": [
+            1.180086766081959,
+            0.9809496146957661,
+            24.599760922742583,
+            3.719251137399299e-12,
+            -1.861405421003427,
+            -1.2357609832000918e-11
+          ],
+          "FE_principal_stress_psi": [
+            24.7455588237667,
+            1.180086766081959,
+            0.8351517136716523
+          ],
+          "FE_traction_on_plus_z_face_psi": [
+            -1.2357609832000918e-11,
+            -1.861405421003427,
+            24.599760922742583
+          ],
+          "beam_sigma_zz_psi": 20.744999999999997,
+          "beam_tau_yz_psi": -1.6244999999999998,
+          "sigma_zz_difference_psi": 3.854760922742585,
+          "tau_yz_difference_psi": -0.23690542100342715
+        }
+      ]
+    },
+    {
+      "fraction_of_length": 0.75,
+      "z_in": 90.0,
+      "source_element_for_displacement": 15,
+      "FE_centerline_uy_in": -0.07507761310091138,
+      "beam_centerline_uy_in": -0.07620328125,
+      "centerline_uy_difference_in": 0.0011256681490886267,
+      "beam_shear_y_lbf": -29.504,
+      "beam_moment_x_lbf_in": 634.56,
+      "local_stress_samples": [
+        {
+          "y_in": -2.0,
+          "source_element": 11,
+          "FE_stress_voigt_psi": [
+            -0.3917617306657152,
+            -0.1312343130515895,
+            -8.15310461361764,
+            -7.366740323778076e-13,
+            -1.076610706941056,
+            -8.173732677656232e-12
+          ],
+          "FE_principal_stress_psi": [
+            0.010744139676655716,
+            -0.3917617306657159,
+            -8.295083066345882
+          ],
+          "FE_traction_on_plus_z_face_psi": [
+            -8.173732677656232e-12,
+            -1.076610706941056,
+            -8.15310461361764
+          ],
+          "beam_sigma_zz_psi": -7.436249999999999,
+          "beam_tau_yz_psi": -1.03725,
+          "sigma_zz_difference_psi": -0.7168546136176399,
+          "tau_yz_difference_psi": -0.03936070694105598
+        },
+        {
+          "y_in": 0.0,
+          "source_element": 15,
+          "FE_stress_voigt_psi": [
+            -1.3951359582617957e-12,
+            2.8067017491260477e-13,
+            -3.5630976321343524e-11,
+            1.0177865795728855e-12,
+            -0.8345755876174783,
+            -1.2430084731401965e-11
+          ],
+          "FE_principal_stress_psi": [
+            0.8345755875998022,
+            -1.3951359582921134e-12,
+            -0.8345755876351532
+          ],
+          "FE_traction_on_plus_z_face_psi": [
+            -1.2430084731401965e-11,
+            -0.8345755876174783,
+            -3.5630976321343524e-11
+          ],
+          "beam_sigma_zz_psi": 0.0,
+          "beam_tau_yz_psi": -1.383,
+          "sigma_zz_difference_psi": -3.5630976321343524e-11,
+          "tau_yz_difference_psi": 0.5484244123825217
+        },
+        {
+          "y_in": 2.0,
+          "source_element": 15,
+          "FE_stress_voigt_psi": [
+            0.39176173066417824,
+            0.13123431305066524,
+            8.153104613546688,
+            4.766467524488251e-12,
+            -1.0766107069403672,
+            -1.501024504579879e-11
+          ],
+          "FE_principal_stress_psi": [
+            8.295083066275948,
+            0.39176173066417735,
+            -0.010744139678597442
+          ],
+          "FE_traction_on_plus_z_face_psi": [
+            -1.501024504579879e-11,
+            -1.0766107069403672,
+            8.153104613546688
+          ],
+          "beam_sigma_zz_psi": 7.436249999999999,
+          "beam_tau_yz_psi": -1.03725,
+          "sigma_zz_difference_psi": 0.7168546135466887,
+          "tau_yz_difference_psi": -0.039360706940367196
+        }
+      ]
+    }
+  ],
+  "certified_error_bound": false,
+  "caveat": "FE work-energy consistency checks implementation, not exact 3D accuracy; beam stresses and displacement are 1D approximations; sample points may lie on internal element faces; stress is one-sided there. No full stress equilibration or bound has been constructed."
+}

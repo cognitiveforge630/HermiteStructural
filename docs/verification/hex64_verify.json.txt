@@ -1,0 +1,37 @@
+{
+  "polynomial": {
+    "order": 3,
+    "max_absolute_errors": {
+      "partition_unity": 4.440892098500626e-16,
+      "derivative_partition": 4.440892098500626e-16,
+      "affine_displacement": 6.661338147750939e-16,
+      "affine_gradient": 1.1275702593849246e-15,
+      "tensor_product_polynomial": 2.220446049250313e-16,
+      "tensor_product_polynomial_gradient": 1.3322676295501878e-15
+    },
+    "passed": true,
+    "certified_error_bound": false
+  },
+  "one_cell_mechanics": {
+    "order": 3,
+    "residuals": {
+      "force_y_error_lbf": 3.552713678800501e-15,
+      "total_force_xz_abs_lbf": 0.0,
+      "applied_moment_x_error_lbf_in": 0.0,
+      "rigid_translation_rotation_relative_K_residual": 1.1377166137123902e-16,
+      "constant_strain_relative_energy_error": 5.8744059586958645e-16,
+      "local_stiffness_symmetry_relative_error": 9.626043168959457e-17
+    },
+    "tolerances": {
+      "force_y_error_lbf": 1e-09,
+      "total_force_xz_abs_lbf": 1e-09,
+      "applied_moment_x_error_lbf_in": 1e-08,
+      "rigid_translation_rotation_relative_K_residual": 1e-10,
+      "constant_strain_relative_energy_error": 1e-10,
+      "local_stiffness_symmetry_relative_error": 1e-12
+    },
+    "passed": true,
+    "certified_error_bound": false
+  }
+}
+Small independent-element verification only: no structural solve performed.

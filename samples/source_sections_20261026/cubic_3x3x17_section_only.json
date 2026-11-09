@@ -1,0 +1,99 @@
+{
+  "formulation": "cubic_rotation_hermite",
+  "research_not_certified": true,
+  "comparison_is_not_a_posteriori_bound": true,
+  "recovery": "cubic",
+  "node_mesh": [
+    3,
+    3,
+    17
+  ],
+  "fem_tip_uy_in": -0.11662281240804805,
+  "awc_reference": {
+    "end_load_uy_in": -0.03927272727272727,
+    "self_weight_uy_in": -0.07687636363636363,
+    "total_uy_in": -0.1161490909090909,
+    "weight_per_length_lbf_in": 0.5568,
+    "total_weight_lbf": 66.816
+  },
+  "difference_vs_awc_pct": 0.4078563984008522,
+  "under_one_percent": true,
+  "total_y_force_lbf": -79.61599999999999,
+  "calibrated_modulus": false,
+  "longitudinal_E_psi": 1100000.0,
+  "end_force_lbf": -12.8,
+  "redwood_reference_grade": "Redwood Select Structural (dimension lumber, nominal)",
+  "redwood_reference_screen": {
+    "status": "PASS_PRELIMINARY",
+    "checks": {
+      "bending": {
+        "demand": 129.95999999999998,
+        "limit": 1100.0,
+        "units": "psi",
+        "utilization": 0.11814545454545453,
+        "passes": true
+      },
+      "parallel_tension": {
+        "demand": 129.95999999999998,
+        "limit": 625.0,
+        "units": "psi",
+        "utilization": 0.20793599999999995,
+        "passes": true
+      },
+      "parallel_compression": {
+        "demand": 129.95999999999998,
+        "limit": 1100.0,
+        "units": "psi",
+        "utilization": 0.11814545454545453,
+        "passes": true
+      },
+      "parallel_shear": {
+        "demand": 3.732,
+        "limit": 160.0,
+        "units": "psi",
+        "utilization": 0.023325000000000002,
+        "passes": true
+      },
+      "example_tip_serviceability": {
+        "demand": 0.1161490909090909,
+        "limit": 0.3333333333333333,
+        "units": "in",
+        "utilization": 0.3484472727272727,
+        "passes": true
+      }
+    },
+    "weight_per_length_lbf_in": 0.5568,
+    "assumed_nominal_grade": "Redwood Select Structural (dimension lumber, nominal)",
+    "limits_not_failure_strength": true,
+    "not_a_structural_design_approval": true
+  },
+  "stress_distribution_certified": false,
+  "boundary_condition": "strong KKT face-displacement trace and fixed nodal rotations",
+  "linear_solver_diagnostics": {
+    "constrain_rotations": true,
+    "independent_trace_constraints": 33,
+    "sampled_trace_constraints": 192,
+    "maximum_trace_error_in": 8.672426239801959e-19,
+    "linear_solve": {
+      "backend": "scipy",
+      "seconds": 0.02927346599994962,
+      "system_size": 897,
+      "nonzeros": 337149,
+      "absolute_residual_inf": 2.1496789643499215e-07,
+      "rhs_relative_residual_inf": 4.4024114611697185e-08,
+      "relative_backward_error": 4.1808898273479914e-20
+    },
+    "phase_timings_seconds": {
+      "stiffness_assembly": 0.7434636799998771,
+      "trace_constraints": 0.030337642999938907,
+      "rank_filter_qr": 0.00760038200019153,
+      "linear_solve": 0.02927346599994962
+    },
+    "kkt_size": 897
+  },
+  "cubic_source_section_file": "cubic_3x3x17_section_only_source_sections.json",
+  "cubic_source_max_midspan_shear_y_difference_pct": 8.052800216771969,
+  "cubic_source_max_midspan_moment_x_difference_pct": 2.2963796294202887,
+  "cubic_source_section_quadrature_order": 4,
+  "sampled_cubic_stress_screen_performed": false
+}

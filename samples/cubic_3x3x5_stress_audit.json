@@ -1,0 +1,157 @@
+{
+  "status": "PASS_PRELIMINARY_SAMPLE_SCREEN",
+  "model": "research cubic Hermite, raw constitutive FE stress sampled at cell centers",
+  "stress_distribution_certified": false,
+  "material_reference_grade": "Redwood Select Structural (dimension lumber, nominal)",
+  "material_source": "https://getredwood.com/wp-content/uploads/2024/07/2022-Structural-Design-Values.pdf",
+  "material_E_longitudinal_psi": 1100000.0,
+  "screening_limitations": "Unadjusted grade values and sampling only; no tension-perpendicular, stability, connection or full NDS verification",
+  "beam_reference_screen": {
+    "status": "PASS_PRELIMINARY",
+    "checks": {
+      "bending": {
+        "demand": 129.95999999999998,
+        "limit": 1100.0,
+        "units": "psi",
+        "utilization": 0.11814545454545453,
+        "passes": true
+      },
+      "parallel_tension": {
+        "demand": 129.95999999999998,
+        "limit": 625.0,
+        "units": "psi",
+        "utilization": 0.20793599999999995,
+        "passes": true
+      },
+      "parallel_compression": {
+        "demand": 129.95999999999998,
+        "limit": 1100.0,
+        "units": "psi",
+        "utilization": 0.11814545454545453,
+        "passes": true
+      },
+      "parallel_shear": {
+        "demand": 3.732,
+        "limit": 160.0,
+        "units": "psi",
+        "utilization": 0.023325000000000002,
+        "passes": true
+      },
+      "example_tip_serviceability": {
+        "demand": 0.1161490909090909,
+        "limit": 0.3333333333333333,
+        "units": "in",
+        "utilization": 0.3484472727272727,
+        "passes": true
+      }
+    },
+    "weight_per_length_lbf_in": 0.5568,
+    "assumed_nominal_grade": "Redwood Select Structural (dimension lumber, nominal)",
+    "limits_not_failure_strength": true,
+    "not_a_structural_design_approval": true
+  },
+  "sampled_stress_peaks": {
+    "longitudinal_tension_psi": 81.69209558383885,
+    "longitudinal_compression_psi": 81.6920955837899,
+    "shear_yz_psi": 2.0940776167370414,
+    "shear_xz_psi": 0.49339851286770364,
+    "transverse_compression_xx_psi": 3.3573388213403295,
+    "transverse_compression_yy_psi": 3.909690140514431,
+    "transverse_tension_xx_psi": 3.357338821342622,
+    "transverse_tension_yy_psi": 3.90969014051693
+  },
+  "sampled_utilization": {
+    "longitudinal_tension": 0.13070735293414215,
+    "longitudinal_compression": 0.074265541439809,
+    "shear_yz": 0.013087985104606509,
+    "shear_xz": 0.0030837407054231476,
+    "transverse_compression_xx": 0.007899620756094893,
+    "transverse_compression_yy": 0.009199270918857486
+  },
+  "quarter_to_threequarter_span_sigma_zz_relative_L2_pct": 9.120253468735694,
+  "quarter_to_threequarter_span_max_moment_error_pct": 7.063896942088808,
+  "quarter_to_threequarter_span_max_shear_error_pct": 28.397789007367052,
+  "section_resultants": [
+    {
+      "z_in": 7.5,
+      "FE_bending_moment_lbf_in": 4353.17882332296,
+      "beam_bending_moment_lbf_in": 4963.5,
+      "moment_error_pct": 12.29618568907102,
+      "FE_axial_force_lbf": 7.873950380599126e-10,
+      "FE_shear_y_lbf": -17.55909636515694,
+      "beam_shear_y_lbf": -75.44,
+      "shear_error_pct": 76.72442157322781
+    },
+    {
+      "z_in": 22.5,
+      "FE_bending_moment_lbf_in": 3571.035543139781,
+      "beam_bending_moment_lbf_in": 3894.54,
+      "moment_error_pct": 8.306615334807676,
+      "FE_axial_force_lbf": 7.697735782130621e-10,
+      "FE_shear_y_lbf": -42.4533925265856,
+      "beam_shear_y_lbf": -67.088,
+      "shear_error_pct": 36.71984180988313
+    },
+    {
+      "z_in": 37.5,
+      "FE_bending_moment_lbf_in": 2918.2917584191064,
+      "beam_bending_moment_lbf_in": 2950.8599999999997,
+      "moment_error_pct": 1.1036864365267516,
+      "FE_axial_force_lbf": 7.102016752469353e-10,
+      "FE_shear_y_lbf": -58.41309182358462,
+      "beam_shear_y_lbf": -58.736000000000004,
+      "shear_error_pct": 0.5497619456813229
+    },
+    {
+      "z_in": 52.5,
+      "FE_bending_moment_lbf_in": 2232.6342283186905,
+      "beam_bending_moment_lbf_in": 2132.46,
+      "moment_error_pct": 4.697590028356473,
+      "FE_axial_force_lbf": 7.624976205988787e-10,
+      "FE_shear_y_lbf": -64.69194201347182,
+      "beam_shear_y_lbf": -50.384,
+      "shear_error_pct": 28.397789007367052
+    },
+    {
+      "z_in": 67.5,
+      "FE_bending_moment_lbf_in": 1541.013494246261,
+      "beam_bending_moment_lbf_in": 1439.34,
+      "moment_error_pct": 7.063896942088808,
+      "FE_axial_force_lbf": 8.918732419260778e-10,
+      "FE_shear_y_lbf": -48.31359729598722,
+      "beam_shear_y_lbf": -42.032,
+      "shear_error_pct": 14.944797525664319
+    },
+    {
+      "z_in": 82.5,
+      "FE_bending_moment_lbf_in": 865.1879844772989,
+      "beam_bending_moment_lbf_in": 871.5,
+      "moment_error_pct": 0.7242702837293323,
+      "FE_axial_force_lbf": 8.19710521682282e-10,
+      "FE_shear_y_lbf": -43.05682991520084,
+      "beam_shear_y_lbf": -33.68,
+      "shear_error_pct": 27.840943928743577
+    },
+    {
+      "z_in": 97.5,
+      "FE_bending_moment_lbf_in": 417.2764759787518,
+      "beam_bending_moment_lbf_in": 428.94,
+      "moment_error_pct": 2.719150468887998,
+      "FE_axial_force_lbf": 6.455564971474814e-10,
+      "FE_shear_y_lbf": -25.705258408872908,
+      "beam_shear_y_lbf": -25.328,
+      "shear_error_pct": 1.4894915069208319
+    },
+    {
+      "z_in": 112.5,
+      "FE_bending_moment_lbf_in": -190.65098541460833,
+      "beam_bending_moment_lbf_in": 111.66,
+      "moment_error_pct": 270.7424193216983,
+      "FE_axial_force_lbf": 6.36731556369341e-10,
+      "FE_shear_y_lbf": -8.12769686399512,
+      "beam_shear_y_lbf": -16.976,
+      "shear_error_pct": 52.12242657872809
+    }
+  ],
+  "caveat": "Beam-theory agreement for bending is a partial diagnostic, not a validated 3D stress distribution; check mesh convergence, equilibrium and boundary/interface stresses."
+}
