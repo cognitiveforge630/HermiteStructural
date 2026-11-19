@@ -1,8 +1,12 @@
-# HermiteStructural_CubicHigherOrder_OOP
+# HermiteStructural
 
 ![Site-wide views (GoatCounter)](https://cognitiveforge.goatcounter.com/counter/TOTAL.svg)
 
-Experimental recovered-rotation Hermite elements and conventional nodal Hex27/Hex64 finite elements. **Not certified structural-analysis software.** The Redwood benchmark includes self-weight and consistently integrated end-face traction; its one-dimensional beam reference is not the exact 3D stress solution. This README provides verified commands and distinct experiment records.
+**Primary focus: Hermite hexahedral solid-element research.** The active elements use eight hexahedral vertices, six nodal unknowns (three translations and three rotations), and cubic Hermite interpolation functions. The **linear, quadratic, and cubic** formulation labels describe progressively richer *nonlocal derivative-recovery methods*, not linear/quadratic/cubic Lagrange interpolation orders. Complete cubic reproduction depends on sufficient mesh layers and recovery rank.
+
+**Lagrange elements are comparison and verification references, not the central Hermite method.** Conventional C0 Lagrange Hex8 (linear), Hex27 (quadratic), and Hex64 (cubic) provide independent discretization baselines, tests, and visual comparisons. In particular, **Hex64 is a cubic Lagrange element, not a cubic Hermite element**. Its separate object-oriented (OOP) implementation is supporting comparison infrastructure.
+
+The recovered-rotation Hermite approach builds on published cubic Hermite interpolation but includes independent modeling and recovery choices; results should not be presented as a direct reproduction or full validation of the cited published formulation. **Research prototype, not certified structural-analysis software.** The Redwood benchmark includes self-weight and consistently integrated end-face traction; its one-dimensional beam reference is not the exact 3D stress solution.
 
 > **MANDATORY STRESS-SAMPLING POLICY — NEVER USE CENTROIDS FOR STRESS.**
 > Stress maps and sampled extrema must use directly calculated source-element or
@@ -12,6 +16,66 @@ Experimental recovered-rotation Hermite elements and conventional nodal Hex27/He
 > **The 3×3×5 Hex27/Hex64 examples are only 16-element SMOKE TESTS: stress is
 > rough and NOT VALIDATED, NOT A FINAL RESULT, and NOT FOR STRUCTURAL DESIGN.**
 > See **[mandatory no-centroid stress policy](docs/NO_CENTROID_STRESS_POLICY.md)**.
+
+
+## Hermite element results — consolidated tables
+
+**Read the Hermite results first.** The following four tables collect the recorded Hermite comparisons previously dispersed throughout the README. The values are reproduced **without changing their numerical results**. These are specific research diagnostics against classical beam references, not proven 3D solution errors, guarantees of stress convergence, or approval for structural design. The conventional Lagrange results are retained separately for independent comparisons.
+
+### Hermite variant comparison
+
+On the same **3×3×5 vertex grid (16 physical Hex8 cells)**, with the same Redwood material and loading, these are the recorded tip displacements. Linear/quadratic/cubic here denote **derivative-recovery variants using cubic Hermite interpolation**.
+
+| Hermite formulation | Tip displacement | Signed displacement-magnitude difference from beam theory |
+|:--------------------|-----------------:|----------------------------:|
+| Linear | −0.005386 in | −95.36% |
+| Quadratic | −0.094852 in | −18.34% |
+| Cubic | −0.114796 in | −1.16% |
+
+The analytical beam reference is **−0.116149 in**. Signed percentage = `100 × (|FEM| − |beam|) / |beam|`. A smaller discrepancy to this approximate beam reference is **not** a proof of a smaller true 3D discretization error. See [same-mesh tests and commands](#same-mesh-all-three-formulations).
+
+### Cubic Hermite stress comparison
+
+These are **interior longitudinal bending-stress** comparisons for the cubic recovered-rotation Hermite formulation, not global three-dimensional stress-accuracy certificates.
+
+| Cubic mesh | Signed tip displacement-magnitude difference | Interior longitudinal stress relative L² discrepancy (unsigned) |
+|:--|--:|--:|
+| 3×3×5 | −1.165% | 9.12% |
+| 3×3×9 | −0.465% | 2.16% |
+
+Tip percentages are signed comparisons of displacement magnitudes; the longitudinal stress column is an **unsigned relative L² discrepancy** against beam theory over the central half-span. The 3×3×5 stress result used 2 display subdivisions and 3×3×9 used 3; therefore, these two stress figures are **sampling-confounded** and must not be represented as controlled stress convergence. See [cubic stress diagnostics](#cubic-stress-distribution-a-separate-quantitative-check).
+
+### Cubic Hermite section resultants
+
+Cubic **nonlocal recovered-rotation Hex8** study. Tip values compare the free-end displacement. Shear and moment values compare **integrated interior section resultants**, over the middle half-span, with classical beam theory; **they are not pointwise shear-stress errors**.
+
+| Element formulation | Node mesh | Tip ± (%) | Max interior section shear vs beam, signed (%) | Shear ± (%) | Max interior section moment vs beam, signed (%) | Moment ± (%) |
+|:--|:--|--:|--:|--:|--:|--:|
+| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×5 | −1.165 | +18.84 | +18.84 | +9.35 | +9.35 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×9 | −0.465 | −20.57 | −20.57 | −3.23 | −3.23 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×17 | +0.408 | −8.05 | −8.05 | −2.30 | −2.30 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×33 | +1.108 | −6.12 | −6.12 | −0.32 | −0.32 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×9 | **+0.186** | −15.06 | −15.06 | −2.59 | −2.59 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×17 | +0.671 | −2.04 | −2.04 | −1.67 | −1.67 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×33 | +1.144 | +0.39 | +0.39 | −0.19 | −0.19 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×65 | +1.541 | +0.0045 | +0.0045 | +0.25 | +0.25 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×129 | +1.774 | +**0.0029** | +0.0029 | +0.37 | +0.37 |
+| Cubic Hermite Hex8 (nonlocal recovery) | 7×7×17 | +1.063 | −2.08 | −2.08 | −1.00 | −1.00 |
+
+Signed differences use `100 × (|FEM| − |beam|) / |beam|`; a plus sign means greater FEM magnitude. The repeated shear/moment ± columns preserve the archived reporting format. **The 0.0029% figure is one section-shear resultant discrepancy, not 0.0029% local stress accuracy.** The Hermite benchmark uses displacement-trace constraints plus fixed nodal rotations, whereas the conventional Lagrange comparison uses a translation-only clamp, so the boundary conditions are not identical. See [the full densification discussion and graph](#cubic-hermite-hex8-densification-section-resultant-study).
+
+### Spring-supported Hermite sensitivity
+
+A **separate 7×7×17 cubic Hermite support-compliance experiment**, not a result for the default fixed-face clamp. The spring foundation changes the boundary-value problem; the archived spring-study runner is not included in this checkout.
+
+| Quantity | FEM | Classical beam reference | Absolute relative difference |
+|:--|--:|--:|--:|
+| Free-end tip u_y (in) | −0.122732 | −0.116149 | **5.667%** |
+| Shear tau_yz at displayed maximum-difference sample (psi) | −2.43699 | −2.02894 | **20.111%** |
+
+The local shear figure refers to one sampled near-clamp location, **not** the maximum stress of a converged 3D solution. See [spring support methods, map, and limitations](#distributed-spring-support-clamp-region-sensitivity).
+
+---
 
 ## Publication evidence and open verification gates (2026-10-29)
 
@@ -190,10 +254,7 @@ The screenshot above plots **percentage difference from elementary beam theory**
 > **In normal compression alone, it is approximately as stiff as a 1.2-inch-thick Redwood layer loaded along the grain.**
 > This follows from the simple uniaxial layer relation k_n ≈ E_L/t = 1,100,000/1.2 = 916,667 lbf/in³. It is a normal-stiffness analogy, not a complete Redwood layer model: the present springs have the same stiffness tangentially, whereas Redwood has different shear stiffnesses and coupled elastic behavior. This stiffness was selected for a sensitivity experiment, not measured from a fixture.
 
-| Quantity | FEM | Classical beam reference | Absolute relative difference |
-|:--|--:|--:|--:|
-| Free-end tip u_y (in) | −0.122732 | −0.116149 | **5.667%** |
-| Shear tau_yz at displayed maximum-difference sample (psi) | −2.43699 | −2.02894 | **20.111%** |
+The results table is consolidated in [spring-supported Hermite sensitivity](#spring-supported-hermite-sensitivity) at the top of this README.
 
 Tip motion is 5.667% more downward than the rigid-clamp beam reference; spring compliance contributes to this difference. At the displayed shear hotspot, FEM predicts 0.40804 psi greater shear magnitude than the reference. That sample is at approximately **(x,y,z) = (−0.0167, −2.7000, 0.1875) in**, near the root face but not on its geometric edge.
 
@@ -264,6 +325,8 @@ stress accuracy claim is not established by existing results.
 
 ## Mesh previews: Hex8 / Hermite geometry / Hex27 / Hex64
 
+These previews include the Hermite mesh and **conventional Lagrange reference meshes** for comparison. Mesh pictures are not evidence that either formulation has passed a full mechanics verification.
+
 Use a single preview command for **all four mesh families**, before solving. The physical cell wireframe is the default; red interpolation-node markers (`--nodes`) and orange Gaussian-point markers (`--gauss-points`) are optional.
 
 ```powershell
@@ -311,6 +374,8 @@ python -m tools.nodal_field_viewer outputs/hex64_smoke/hex64_3x3x5.npz --field "
 ```
 
 ## Separate OOP nodal-element refactor (2026-10-29)
+
+**Comparison-only scope:** the OOP implementation here is for conventional Lagrange Hex27/Hex64 elements; it does not turn the Hermite recovered-rotation formulation into a higher-node Lagrange element.
 
 **Start here:** [29 October release audit](docs/AUDIT_20261029.md) · [OOP tutorial](docs/OOP_TUTORIAL.md) · [tracked TODO checklist](docs/OOP_TODO.md) · [verification report](docs/BUILD_REPORT_OOP.md).
 
@@ -367,6 +432,8 @@ and [transverse-warping benchmark](docs/TRANSVERSE_CUBIC_SHEAR_RECOVERY_20261027
 for the sampling limits and additional measurements.
 
 ## New: conventional Hex27 and Hex64 comparison (27 October 2026)
+
+**Role: independent Lagrange reference, not a replacement or extension of the Hermite method.** These conventional C0 displacement-only elements are included to check and compare results against a different finite-element family. Do not interpret their polynomial order or OOP work as proof of Hermite-model validity.
 
 An **independent optional** C0 tensor-product nodal solver now tests quadratic
 Hex27 and cubic Hex64 at the **same number of physical source cells** as the
@@ -679,23 +746,12 @@ and moment so that the improvement can be assessed alongside other quantities.
 
 \* **Comparison location and scope:** tip displacement is compared at the free end (z = 120 in). Shear and moment are integrated over source-element cross-sections at axial element midpoints; the table summarizes sections in the middle half-span (z = 30–90 in). These are section-force and section-moment comparisons, not pointwise stress errors. **Local stress differences near the fixed clamp and loaded end may be significantly higher than these interior section-resultant percentages.**
 
-| Element formulation | Node mesh | Tip ± (%) | Max interior section shear vs beam, signed (%) | Shear ± (%) | Max interior section moment vs beam, signed (%) | Moment ± (%) |
-|:--|:--|--:|--:|--:|--:|--:|
-| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×5 | −1.165 | +18.84 | +18.84 | +9.35 | +9.35 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×9 | −0.465 | −20.57 | −20.57 | −3.23 | −3.23 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×17 | +0.408 | −8.05 | −8.05 | −2.30 | −2.30 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 3×3×33 | +1.108 | −6.12 | −6.12 | −0.32 | −0.32 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×9 | **+0.186** | −15.06 | −15.06 | −2.59 | −2.59 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×17 | +0.671 | −2.04 | −2.04 | −1.67 | −1.67 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×33 | +1.144 | +0.39 | +0.39 | −0.19 | −0.19 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×65 | +1.541 | +0.0045 | +0.0045 | +0.25 | +0.25 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 5×5×129 | +1.774 | +**0.0029** | +0.0029 | +0.37 | +0.37 |
-| Cubic Hermite Hex8 (nonlocal recovery) | 7×7×17 | +1.063 | −2.08 | −2.08 | −1.00 | −1.00 |
+The results table is consolidated in [cubic Hermite section-resultant study](#cubic-hermite-section-resultants) at the top of this README.
 
 **Signed comparison (±):** Each signed value compares the FEM **magnitude** with the beam-reference magnitude: `100 × (|FEM| − |beam|) / |beam|`. **+** means the FEM magnitude is higher; **−** means it is lower. The shear and moment comparison columns display signed differences directly; their adjacent Shear ± and Moment ± columns retain the same signed values for compatibility. The tip column also reports the signed difference. For shear and moment, the sign is evaluated at the interior section where that row's respective reported maximum discrepancy occurs (within the central half-span, 30–90 in); the two locations can differ. These are integrated section resultants, not pointwise stress errors.
 
-For the higher-node cubic element, see the **Hex64 rows** in the
-[Hex27/Hex64 results table above](#new-conventional-hex27-and-hex64-comparison-27-october-2026).
+For the higher-node cubic Lagrange comparison, see the **Hex64 rows** in the
+[Hex27/Hex64 results table below](#new-conventional-hex27-and-hex64-comparison-27-october-2026).
 Those conventional-element runs use a translation-only clamp; this Hermite
 table uses the displacement-trace clamp plus fixed nodal rotations.
 
@@ -857,11 +913,7 @@ modulus for every row:
 
 \* **Comparison location and scope:** this table compares only tip displacement at the free end (z = 120 in). It does not measure local shear, tensile or compressive stress accuracy. **Local stress differences from beam theory near the fixed clamp and loaded end may be significantly higher than the displacement percentages shown here.**
 
-| Hermite formulation | Tip displacement | Signed displacement-magnitude difference from beam theory |
-|:--------------------|-----------------:|----------------------------:|
-| Linear | −0.005386 in | −95.36% |
-| Quadratic | −0.094852 in | −18.34% |
-| Cubic | −0.114796 in | −1.16% |
+The results table is consolidated in [three-formulation Hermite comparison](#hermite-variant-comparison) at the top of this README.
 
 Beam-theory reference: **−0.116149 in**. The linear formulation is still far
 too stiff, while cubic is better on this mesh. The signed percentages compare displacement **magnitudes**: `100 × (|FEM| − |beam|) / |beam|`; negative means less downward deflection than beam theory. They quantify **beam agreement only**; they are not error certificates.
@@ -879,10 +931,7 @@ The two cubic mesh studies are summarized below:
 
 \* **Comparison location and scope:** tip displacement is measured at the free end (z = 120 in); the longitudinal-stress L² comparison uses the reported samples in the middle half-span (z = 30–90 in). It is an interior sampled norm, not a full-span maximum local stress difference. **Stress differences near the fixed clamp and loaded end may be significantly higher and are outside the scope of this interior stress comparison.**
 
-| Cubic mesh | Signed tip displacement-magnitude difference | Interior longitudinal stress relative L² discrepancy (unsigned) |
-|:--|--:|--:|
-| 3×3×5 | −1.165% | 9.12% |
-| 3×3×9 | −0.465% | 2.16% |
+The results table is consolidated in [cubic Hermite stress comparison](#cubic-hermite-stress-comparison) at the top of this README.
 
 The signed tip figures compare FE deflection magnitudes with the same analytical beam
 reference (negative means less downward deflection). The stress figures remain **unsigned relative L² differences** between sampled
